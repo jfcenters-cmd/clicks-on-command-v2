@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Clicks On Command
 
-## Getting Started
+Premium high-converting marketing site for **Clicks On Command** — a preferred marketing vendor for Contour Light® Research LLC, building predictable prepay systems for body contouring clinics.
 
-First, run the development server:
+Designed and engineered with Apple-level spacing, military-precision energy, and a dark luxury aesthetic. No cliché agency gradients. No vanity metrics.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Stack
+
+- **Next.js 16** (App Router, TypeScript)
+- **Tailwind CSS v4** (CSS-first theme tokens)
+- **Framer Motion** for cinematic, restrained motion
+- **lucide-react** for hairline iconography
+- **Inter / Instrument Serif / JetBrains Mono** via `next/font`
+
+## Architecture
+
+```
+src/
+  app/
+    layout.tsx          # Fonts, metadata, viewport
+    page.tsx            # Composes the whole site
+    globals.css         # Tailwind v4 @theme + design tokens
+  components/
+    Navbar.tsx
+    Footer.tsx
+    CalendlyProvider.tsx  # Global modal trigger context
+    CalendlyModal.tsx     # Glassmorphism Calendly popup
+    sections/
+      Hero.tsx
+      PreferredVendor.tsx
+      Results.tsx          # Stats + client outcomes
+      DocuMarketing.tsx    # Narrative + approach
+      FinalCTA.tsx
+    ui/
+      Button.tsx
+      Container.tsx
+      Eyebrow.tsx
+      GlassCard.tsx
+      Logo.tsx
+      SectionHeading.tsx
+      AnimatedNumber.tsx
+  lib/
+    cn.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Sections are isolated, composable, and can be reordered or A/B tested without touching shared primitives.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Getting started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+# Edit NEXT_PUBLIC_CALENDLY_URL with your real Calendly link
 
-## Learn More
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Then open <http://localhost:3000>.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Production build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build && npm start
+```
 
-## Deploy on Vercel
+## Conversion mechanics
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Primary CTA — **Book A Strategy Call** — in nav, hero, and final section, all opening the same Calendly modal via `CalendlyProvider`.
+- Secondary links scroll to **DocuMarketing** or **Partner** for depth before the ask.
+- Stat counters animate on scroll; client outcome cards carry social proof without fake quotes.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Design tokens
+
+All design tokens live in `src/app/globals.css` under `@theme`:
+
+- `--color-background` `#060607`
+- `--color-surface` `#0b0b0d`
+- `--color-accent` `#c9a66b` (warm gold — the only signature color)
+- `--font-display` Instrument Serif
+- `--font-sans` Inter
+- `--font-mono` JetBrains Mono
+
+Single accent + editorial serif gives the brand its operator/luxury feel without leaning on gradients.

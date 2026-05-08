@@ -1,26 +1,134 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-background: #060607;
+  --color-surface: #0b0b0d;
+  --color-surface-2: #111114;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+  --color-foreground: #f5f5f4;
+  --color-muted: rgba(245, 245, 244, 0.62);
+  --color-subtle: rgba(245, 245, 244, 0.42);
+
+  --color-accent: #c9a66b;
+  --color-accent-soft: #e2c896;
+  --color-accent-deep: #8a6f3c;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-instrument), "Times New Roman", serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --shadow-luxe:
+    0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 30px 60px -30px rgba(0, 0, 0, 0.8);
+
+  --animate-shimmer: shimmer 6s linear infinite;
+  --animate-grid-fade: grid-fade 8s ease-in-out infinite;
+  --animate-rise: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes grid-fade {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.32; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html, body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  body {
+    background-image:
+      radial-gradient(1200px 600px at 50% -10%, rgba(201, 166, 107, 0.08), transparent 60%),
+      radial-gradient(900px 500px at 90% 110%, rgba(201, 166, 107, 0.05), transparent 60%);
+  }
+
+  ::selection {
+    background: rgba(201, 166, 107, 0.35);
+    color: #fff;
+  }
+
+  h1, h2, h3, h4 {
+    letter-spacing: -0.02em;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+    font-feature-settings: "ss01";
+    letter-spacing: -0.025em;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .hairline {
+    box-shadow: 0 0 0 1px var(--color-border);
+  }
+
+  .hairline-strong {
+    box-shadow: 0 0 0 1px var(--color-border-strong);
+  }
+
+  .luxe-card {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 60%),
+      var(--color-surface);
+    box-shadow: var(--shadow-luxe);
+    border: 1px solid var(--color-border);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 40%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 40%, transparent 75%);
+  }
+
+  .noise {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .text-shadow-luxe {
+    text-shadow: 0 1px 0 rgba(0,0,0,0.4), 0 8px 30px rgba(0,0,0,0.5);
+  }
+
+  .scroll-mt-nav {
+    scroll-margin-top: 96px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
 }
