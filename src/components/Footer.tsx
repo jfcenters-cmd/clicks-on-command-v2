@@ -24,13 +24,13 @@ export function Footer() {
             © {new Date().getFullYear()} Clicks On Command, LLC
           </span>
           <div className="flex items-center gap-6">
-            <a href="#partner" className="transition-colors hover:text-foreground/70">
+            <a href="/#partner" className="transition-colors hover:text-foreground/70">
               Partner
             </a>
-            <a href="#documarketing" className="transition-colors hover:text-foreground/70">
+            <a href="/#documarketing" className="transition-colors hover:text-foreground/70">
               DocuMarketing
             </a>
-            <a href="#results" className="transition-colors hover:text-foreground/70">
+            <a href="/#results" className="transition-colors hover:text-foreground/70">
               Results
             </a>
             <a

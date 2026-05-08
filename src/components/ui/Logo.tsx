@@ -3,7 +3,7 @@ import { cn } from "@/lib/cn";
 export function Logo({ className }: { className?: string }) {
   return (
     <a
-      href="#top"
+      href="/#top"
       className={cn(
         "group flex items-center gap-2.5 text-foreground",
         className,

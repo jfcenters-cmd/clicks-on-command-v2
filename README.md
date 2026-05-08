@@ -17,13 +17,15 @@ Designed and engineered with Apple-level spacing, military-precision energy, and
 ```
 src/
   app/
-    layout.tsx          # Fonts, metadata, viewport
-    page.tsx            # Composes the whole site
+    layout.tsx          # Fonts, metadata, viewport — wraps CalendlyProvider
+    page.tsx            # Homepage sections
+    thank-you/          # Post–opt-in confirmation + calendar CTA
     globals.css         # Tailwind v4 @theme + design tokens
   components/
     Navbar.tsx
     Footer.tsx
-    CalendlyProvider.tsx  # Global modal trigger context
+    CalendlyProvider.tsx  # Booking context (opt-in + Calendly)
+    OptInModal.tsx        # Lead capture → /thank-you
     CalendlyModal.tsx     # Glassmorphism Calendly popup
     sections/
       Hero.tsx
@@ -41,6 +43,8 @@ src/
       AnimatedNumber.tsx
   lib/
     cn.ts
+    bookingPrefill.ts
+    phoneRegions.ts
 ```
 
 Sections are isolated, composable, and can be reordered or A/B tested without touching shared primitives.
@@ -65,8 +69,9 @@ npm run build && npm start
 
 ## Conversion mechanics
 
-- Primary CTA — **Book A Strategy Call** — collects **first name, email, phone** in `OptInModal`, posts to **`/api/optin`**, then opens the Calendly modal with name + email prefilled (`CalendlyProvider`).
-- Optionally set **`OPTIN_WEBHOOK_URL`** (e.g. Zapier/Make webhook) so each opt-in POSTs JSON `{ firstName, email, phone, source, submittedAt }` to your stack.
+- Primary CTA — **Book A Strategy Call** — opens `OptInModal` (country code + national phone, bundled as **E.164** client-side → **`/api/optin`**). Successful submit stores name/email in `sessionStorage` and routes to **`/thank-you`**. **Pick a time** (thank-you screen or navbar on that route) consumes that payload and opens **Calendly** with prefilled invitee fields.
+- `CalendlyProvider` wraps **`src/app/layout.tsx`** so scheduling works across `/` and `/thank-you`.
+- Optionally set **`OPTIN_WEBHOOK_URL`** (e.g. Zapier/Make webhook) so each opt-in POSTs JSON including `{ firstName, email, phone, phoneCountry?, source, submittedAt }` (`phone` is E.164).
 - Secondary links scroll to **DocuMarketing** or **Partner** for depth before the ask.
 - Stat counters animate on scroll; client outcome cards carry social proof without fake quotes.
 

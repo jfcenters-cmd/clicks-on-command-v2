@@ -1,21 +1,31 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
+import { storeBookingPrefill } from "@/lib/bookingPrefill";
+import {
+  PHONE_REGIONS,
+  buildE164,
+  defaultPhoneIso,
+  digitsOnly,
+  isValidNationalNumber,
+} from "@/lib/phoneRegions";
 
 type OptInModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: (data: { firstName: string; email: string }) => void;
 };
 
-export function OptInModal({ isOpen, onClose, onSuccess }: OptInModalProps) {
+export function OptInModal({ isOpen, onClose }: OptInModalProps) {
+  const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [nationalPhone, setNationalPhone] = useState("");
+  const [phoneIso, setPhoneIso] = useState("US");
   const [website, setWebsite] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
@@ -24,7 +34,8 @@ export function OptInModal({ isOpen, onClose, onSuccess }: OptInModalProps) {
     if (!isOpen) return;
     setFirstName("");
     setEmail("");
-    setPhone("");
+    setNationalPhone("");
+    setPhoneIso(defaultPhoneIso());
     setWebsite("");
     setError(null);
     setPending(false);
@@ -41,9 +52,24 @@ export function OptInModal({ isOpen, onClose, onSuccess }: OptInModalProps) {
     };
   }, [isOpen, onClose]);
 
+  const region = PHONE_REGIONS.find((r) => r.iso === phoneIso) ?? PHONE_REGIONS[0];
+  const nationalDigits = digitsOnly(nationalPhone);
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+
+    if (!isValidNationalNumber(phoneIso, nationalDigits)) {
+      const hint =
+        phoneIso === "US" || phoneIso === "CA"
+          ? "Enter a valid 10-digit phone number."
+          : "Enter a valid phone number (digits only).";
+      setError(hint);
+      return;
+    }
+
+    const phone = buildE164(region.dial, nationalDigits);
+
     setPending(true);
 
     try {
@@ -55,6 +81,7 @@ export function OptInModal({ isOpen, onClose, onSuccess }: OptInModalProps) {
           email,
           phone,
           website,
+          phoneCountry: phoneIso,
         }),
       });
 
@@ -68,8 +95,13 @@ export function OptInModal({ isOpen, onClose, onSuccess }: OptInModalProps) {
         return;
       }
 
+      storeBookingPrefill({
+        name: firstName.trim(),
+        email: email.trim(),
+      });
       setPending(false);
-      onSuccess({ firstName: firstName.trim(), email: email.trim() });
+      onClose();
+      router.push("/thank-you");
     } catch {
       setError("Could not reach the server. Check your connection.");
       setPending(false);
@@ -127,8 +159,7 @@ export function OptInModal({ isOpen, onClose, onSuccess }: OptInModalProps) {
                   Quick details
                 </h3>
                 <p className="mt-2 text-[12px] leading-snug text-foreground/60 sm:mt-2.5">
-                  First name, email, and phone — then you&apos;ll choose a slot
-                  on the calendar.
+                  We&apos;ll confirm on the next screen, then open the calendar.
                 </p>
               </div>
 
@@ -188,21 +219,52 @@ export function OptInModal({ isOpen, onClose, onSuccess }: OptInModalProps) {
                 />
               </label>
 
-              <label className="block">
+              <div className="block">
                 <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">
                   Phone
                 </span>
-                <input
-                  required
-                  type="tel"
-                  name="phone"
-                  autoComplete="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-[15px] text-foreground outline-none ring-accent/30 transition-[border-color,box-shadow] placeholder:text-foreground/25 focus:border-accent/40 focus:ring-2"
-                  placeholder="(555) 123-4567"
-                />
-              </label>
+                <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
+                  <select
+                    name="phoneCountry"
+                    value={phoneIso}
+                    aria-label="Country"
+                    onChange={(e) => setPhoneIso(e.target.value)}
+                    className={cn(
+                      "shrink-0 cursor-pointer rounded-xl border border-white/[0.1] bg-white/[0.03]",
+                      "px-3 py-3 text-[14px] text-foreground outline-none ring-accent/30 sm:max-w-[min(210px,100%)]",
+                      "focus:border-accent/40 focus:ring-2",
+                    )}
+                  >
+                    {PHONE_REGIONS.map((r) => (
+                      <option key={r.iso} value={r.iso}>
+                        {r.label}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    required
+                    type="tel"
+                    name="phoneNational"
+                    inputMode="tel"
+                    autoComplete="tel-national"
+                    value={nationalPhone}
+                    onChange={(e) => setNationalPhone(e.target.value)}
+                    className={cn(
+                      "min-h-11 min-w-0 flex-1 rounded-xl border border-white/[0.1]",
+                      "bg-white/[0.03] px-4 py-3 text-[15px] text-foreground outline-none ring-accent/30",
+                      "placeholder:text-foreground/25 focus:border-accent/40 focus:ring-2",
+                    )}
+                    placeholder={
+                      phoneIso === "US" || phoneIso === "CA"
+                        ? "5551234567"
+                        : "Mobile number"
+                    }
+                  />
+                </div>
+                <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/30">
+                  Code defaults to your device region ({region.dial}).
+                </p>
+              </div>
 
               {error && (
                 <p
@@ -215,7 +277,7 @@ export function OptInModal({ isOpen, onClose, onSuccess }: OptInModalProps) {
 
               <p className="text-center text-[11px] leading-relaxed text-foreground/40">
                 By continuing, you agree we may contact you about this request.
-                You&apos;ll open our scheduling page next.
+                Next you&apos;ll see a short thank-you screen, then the calendar.
               </p>
 
               <Button
@@ -234,7 +296,7 @@ export function OptInModal({ isOpen, onClose, onSuccess }: OptInModalProps) {
                     Saving…
                   </>
                 ) : (
-                  "Continue to calendar"
+                  "Continue"
                 )}
               </Button>
             </form>

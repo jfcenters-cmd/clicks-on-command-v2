@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./ui/Logo";
@@ -9,15 +10,22 @@ import { cn } from "@/lib/cn";
 import { useCalendly } from "./CalendlyProvider";
 
 const links = [
-  { href: "#partner", label: "Partner" },
-  { href: "#results", label: "Results" },
-  { href: "#documarketing", label: "DocuMarketing" },
+  { href: "/#partner", label: "Partner" },
+  { href: "/#results", label: "Results" },
+  { href: "/#documarketing", label: "DocuMarketing" },
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const { open: openCalendly } = useCalendly();
+  const { open: openBooking, tryOpenStoredCalendarBooking } = useCalendly();
+
+  function handleBookClick() {
+    setOpen(false);
+    if (pathname === "/thank-you" && tryOpenStoredCalendarBooking()) return;
+    openBooking();
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -66,7 +74,7 @@ export function Navbar() {
             size="sm"
             variant="primary"
             withArrow
-            onClick={() => openCalendly()}
+            onClick={handleBookClick}
           >
             Book A Strategy Call
           </Button>
@@ -116,10 +124,7 @@ export function Navbar() {
                   size="lg"
                   withArrow
                   className="w-full"
-                  onClick={() => {
-                    setOpen(false);
-                    openCalendly();
-                  }}
+                  onClick={handleBookClick}
                 >
                   Book A Strategy Call
                 </Button>

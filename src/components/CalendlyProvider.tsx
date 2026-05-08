@@ -9,13 +9,17 @@ import {
 } from "react";
 import { CalendlyModal } from "./CalendlyModal";
 import { OptInModal } from "./OptInModal";
+import { takeBookingPrefill } from "@/lib/bookingPrefill";
 
 type Phase = "idle" | "optin" | "calendly";
 
 type CalendlyContextValue = {
+  /** Opens the opt-in form (booking funnel start). */
   open: () => void;
   close: () => void;
-  /** True when the Calendly scheduler is visible */
+  /** After `/thank-you`, opens Calendly using stored name/email when present. Returns true when the calendar opens. */
+  tryOpenStoredCalendarBooking: () => boolean;
+  /** True when the Calendly iframe is visible */
   isOpen: boolean;
 };
 
@@ -43,31 +47,28 @@ export function CalendlyProvider({
     setPrefill({});
   }, []);
 
-  const afterOptIn = useCallback(
-    (data: { firstName: string; email: string }) => {
-      setPrefill({ name: data.firstName, email: data.email });
-      setPhase("calendly");
-    },
-    [],
-  );
+  const tryOpenStoredCalendarBooking = useCallback(() => {
+    const data = takeBookingPrefill();
+    if (!data || !data.name || !data.email) return false;
+    setPrefill({ name: data.name, email: data.email });
+    setPhase("calendly");
+    return true;
+  }, []);
 
   const value = useMemo(
     () => ({
       open,
       close,
+      tryOpenStoredCalendarBooking,
       isOpen: phase === "calendly",
     }),
-    [open, close, phase],
+    [open, close, tryOpenStoredCalendarBooking, phase],
   );
 
   return (
     <CalendlyContext.Provider value={value}>
       {children}
-      <OptInModal
-        isOpen={phase === "optin"}
-        onClose={close}
-        onSuccess={afterOptIn}
-      />
+      <OptInModal isOpen={phase === "optin"} onClose={close} />
       <CalendlyModal
         isOpen={phase === "calendly"}
         onClose={close}

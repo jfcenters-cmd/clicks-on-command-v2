@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { CalendlyProvider } from "@/components/CalendlyProvider";
 import "./globals.css";
+
+const CALENDLY_URL =
+  process.env.NEXT_PUBLIC_CALENDLY_URL ??
+  "https://calendly.com/clicksoncommand/30min";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -83,7 +88,7 @@ export default function RootLayout({
       className={`${inter.variable} ${instrument.variable} ${jetbrains.variable} antialiased`}
     >
       <body className="min-h-screen min-h-[100dvh] bg-background text-foreground selection:bg-accent/40">
-        {children}
+        <CalendlyProvider url={CALENDLY_URL}>{children}</CalendlyProvider>
       </body>
     </html>
   );

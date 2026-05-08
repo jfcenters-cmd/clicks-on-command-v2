@@ -4,9 +4,9 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-/** US-ish phone: digits + optional formatting, at least 10 digits preferred */
-function normalizePhone(raw: string): string {
-  return raw.trim();
+/** Loose E.164: +country + national digits, 10–17 chars total digits after + typical */
+function isPlausibleE164(phone: string): boolean {
+  return /^\+[1-9]\d{9,14}$/.test(phone.trim());
 }
 
 export async function POST(request: Request) {
@@ -22,17 +22,18 @@ export async function POST(request: Request) {
     const firstName =
       typeof body.firstName === "string" ? body.firstName.trim() : "";
     const email = typeof body.email === "string" ? body.email.trim() : "";
-    const phone = normalizePhone(
-      typeof body.phone === "string" ? body.phone : "",
-    );
+    const phone =
+      typeof body.phone === "string" ? body.phone.trim().replace(/\s/g, "") : "";
+    const phoneCountry =
+      typeof body.phoneCountry === "string" ? body.phoneCountry.trim() : "";
 
     if (
       firstName.length < 1 ||
       firstName.length > 120 ||
       !isValidEmail(email) ||
       email.length > 254 ||
-      phone.length < 7 ||
-      phone.length > 40
+      !isPlausibleE164(phone) ||
+      phone.length > 20
     ) {
       return NextResponse.json(
         { error: "Invalid name, email, or phone." },
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
       firstName,
       email,
       phone,
+      ...(phoneCountry ? { phoneCountry } : {}),
       source: "clicks-on-command",
       submittedAt: new Date().toISOString(),
     };
@@ -56,7 +58,7 @@ export async function POST(request: Request) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       }).catch(() => {
-        /* still let them book — capture failure is logged in Vercel if needed */
+        /* booking success still succeeds */
       });
     }
 
