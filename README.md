@@ -65,7 +65,8 @@ npm run build && npm start
 
 ## Conversion mechanics
 
-- Primary CTA — **Book A Strategy Call** — in nav, hero, and final section, all opening the same Calendly modal via `CalendlyProvider`.
+- Primary CTA — **Book A Strategy Call** — collects **first name, email, phone** in `OptInModal`, posts to **`/api/optin`**, then opens the Calendly modal with name + email prefilled (`CalendlyProvider`).
+- Optionally set **`OPTIN_WEBHOOK_URL`** (e.g. Zapier/Make webhook) so each opt-in POSTs JSON `{ firstName, email, phone, source, submittedAt }` to your stack.
 - Secondary links scroll to **DocuMarketing** or **Partner** for depth before the ask.
 - Stat counters animate on scroll; client outcome cards carry social proof without fake quotes.
 

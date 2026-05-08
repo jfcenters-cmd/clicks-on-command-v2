@@ -29,7 +29,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative isolate flex min-h-[100svh] flex-col justify-center overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-24"
+      className="relative isolate flex flex-col overflow-hidden pt-24 pb-12 max-sm:min-h-0 max-sm:justify-start sm:min-h-[100svh] sm:justify-center sm:pt-36 sm:pb-24"
     >
       <HeroBackground />
 
@@ -40,7 +40,7 @@ export function Hero() {
             initial="hidden"
             animate="show"
             custom={0}
-            className="mt-1 max-w-5xl font-display text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.98] tracking-tight text-balance text-shadow-luxe"
+            className="mt-0 max-w-5xl font-display text-[clamp(2rem,6.5vw,5.5rem)] leading-[0.98] tracking-tight text-balance text-shadow-luxe sm:text-[clamp(2.5rem,7vw,5.5rem)]"
           >
             Predictable{" "}
             <span className="text-accent">prepaid sales</span>
@@ -57,7 +57,7 @@ export function Hero() {
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:text-lg"
+            className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:mt-6 sm:text-lg"
           >
             We engineer paid advertising, conversion systems, and{" "}
             <span className="text-foreground/90">DocuMarketing</span> frameworks
@@ -90,12 +90,12 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mt-14 grid w-full max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] sm:mt-16 sm:grid-cols-4"
+          className="mx-auto mt-8 grid w-full max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] sm:mt-16 sm:grid-cols-4"
         >
           {trustItems.map((t) => (
             <div
               key={t.label}
-              className="group relative bg-background/40 px-4 py-4 transition-colors hover:bg-white/[0.02] sm:px-5 sm:py-5"
+              className="group relative bg-background/40 px-3 py-3 transition-colors hover:bg-white/[0.02] sm:px-5 sm:py-5"
             >
               <div className="flex items-center gap-2.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_12px_rgba(201,166,107,0.6)]" />

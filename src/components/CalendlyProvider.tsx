@@ -8,10 +8,14 @@ import {
   useState,
 } from "react";
 import { CalendlyModal } from "./CalendlyModal";
+import { OptInModal } from "./OptInModal";
+
+type Phase = "idle" | "optin" | "calendly";
 
 type CalendlyContextValue = {
-  open: (prefill?: { name?: string; email?: string }) => void;
+  open: () => void;
   close: () => void;
+  /** True when the Calendly scheduler is visible */
   isOpen: boolean;
 };
 
@@ -24,21 +28,52 @@ export function CalendlyProvider({
   children: React.ReactNode;
   url: string;
 }) {
-  const [isOpen, setOpen] = useState(false);
-  const [prefill, setPrefill] = useState<{ name?: string; email?: string }>({});
+  const [phase, setPhase] = useState<Phase>("idle");
+  const [prefill, setPrefill] = useState<{ name?: string; email?: string }>(
+    {},
+  );
 
-  const open = useCallback((p?: { name?: string; email?: string }) => {
-    if (p) setPrefill(p);
-    setOpen(true);
+  const open = useCallback(() => {
+    setPrefill({});
+    setPhase("optin");
   }, []);
-  const close = useCallback(() => setOpen(false), []);
 
-  const value = useMemo(() => ({ open, close, isOpen }), [open, close, isOpen]);
+  const close = useCallback(() => {
+    setPhase("idle");
+    setPrefill({});
+  }, []);
+
+  const afterOptIn = useCallback(
+    (data: { firstName: string; email: string }) => {
+      setPrefill({ name: data.firstName, email: data.email });
+      setPhase("calendly");
+    },
+    [],
+  );
+
+  const value = useMemo(
+    () => ({
+      open,
+      close,
+      isOpen: phase === "calendly",
+    }),
+    [open, close, phase],
+  );
 
   return (
     <CalendlyContext.Provider value={value}>
       {children}
-      <CalendlyModal isOpen={isOpen} onClose={close} url={url} prefill={prefill} />
+      <OptInModal
+        isOpen={phase === "optin"}
+        onClose={close}
+        onSuccess={afterOptIn}
+      />
+      <CalendlyModal
+        isOpen={phase === "calendly"}
+        onClose={close}
+        url={url}
+        prefill={prefill}
+      />
     </CalendlyContext.Provider>
   );
 }

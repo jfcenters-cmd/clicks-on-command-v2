@@ -68,7 +68,7 @@ export function Results() {
   return (
     <section
       id="results"
-      className="scroll-mt-nav relative overflow-hidden border-y border-white/[0.05] py-20 sm:py-24"
+      className="scroll-mt-nav relative overflow-hidden border-y border-white/[0.05] py-12 sm:py-24"
     >
       <div
         aria-hidden
@@ -89,7 +89,7 @@ export function Results() {
           description="Aggregate figures from our body contouring accounts. Your results will depend on your market and execution."
         />
 
-        <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] sm:mt-12 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] sm:mt-12 lg:grid-cols-4">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
@@ -97,9 +97,9 @@ export function Results() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="relative bg-background/40 px-5 py-8 transition-colors hover:bg-white/[0.02] sm:px-7 sm:py-9"
+              className="relative bg-background/40 px-3.5 py-5 transition-colors hover:bg-white/[0.02] sm:px-7 sm:py-9"
             >
-              <div className="mt-1 flex items-baseline gap-1 font-display text-5xl leading-none tracking-tight sm:text-6xl">
+              <div className="mt-0.5 flex items-baseline gap-1 font-display text-4xl leading-none tracking-tight sm:mt-1 sm:text-6xl">
                 {s.prefix && (
                   <span className="text-accent/90">{s.prefix}</span>
                 )}
@@ -108,15 +108,15 @@ export function Results() {
                   <span className="text-foreground/60">{s.suffix}</span>
                 )}
               </div>
-              <p className="mt-3 text-[13px] tracking-tight text-foreground/65">
+              <p className="mt-2 text-[12px] tracking-tight text-foreground/65 sm:mt-3 sm:text-[13px]">
                 {s.label}
               </p>
             </motion.div>
           ))}
         </div>
 
-        <div className="mt-12 sm:mt-14">
-          <div className="grid gap-4 md:grid-cols-2">
+        <div className="mt-8 sm:mt-14">
+          <div className="grid gap-3 md:grid-cols-2 md:gap-4">
             {clientResults.map((r, i) => {
               const Icon = r.icon;
               return (
@@ -127,15 +127,15 @@ export function Results() {
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <GlassCard className="relative flex h-full flex-col p-7 sm:p-8">
+                  <GlassCard className="relative flex h-full flex-col p-5 sm:p-8">
                     <div className="flex items-start justify-start">
                       <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-accent/30 bg-accent/[0.08] text-accent">
                         <Icon className="h-5 w-5" strokeWidth={1.6} />
                       </span>
                     </div>
 
-                    <div className="mt-6">
-                      <div className="flex items-baseline gap-3 font-display text-[clamp(3.5rem,7vw,5.5rem)] leading-none tracking-tight">
+                    <div className="mt-4 sm:mt-6">
+                      <div className="flex items-baseline gap-2 font-display text-[clamp(2.65rem,11vw,5.5rem)] leading-none tracking-tight sm:gap-3 sm:text-[clamp(3.5rem,7vw,5.5rem)]">
                         <span className="text-foreground">{r.metric}</span>
                       </div>
                       <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
@@ -143,11 +143,11 @@ export function Results() {
                       </p>
                     </div>
 
-                    <p className="mt-5 max-w-md text-pretty text-[15px] leading-relaxed text-foreground/75">
+                    <p className="mt-3 max-w-md text-pretty text-[14px] leading-relaxed text-foreground/75 sm:mt-5 sm:text-[15px]">
                       {r.context}
                     </p>
 
-                    <div className="mt-auto flex items-center gap-4 border-t border-white/[0.06] pt-5 sm:pt-6">
+                    <div className="mt-auto flex items-center gap-3 border-t border-white/[0.06] pt-4 sm:gap-4 sm:pt-6">
                       <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-white/[0.08] to-transparent font-display text-lg text-accent">
                         {r.client
                           .replace(/^Dr\.\s*/i, "")
@@ -171,7 +171,7 @@ export function Results() {
             })}
           </div>
 
-          <p className="mx-auto mt-8 max-w-xl text-center font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/35">
+          <p className="mx-auto mt-6 max-w-xl text-center font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/35 sm:mt-8">
             Individual results vary · Outcomes depend on clinic, market, and execution
           </p>
         </div>

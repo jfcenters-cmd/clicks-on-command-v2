@@ -22,7 +22,7 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "flex flex-col gap-3.5",
+        "flex flex-col gap-2.5 sm:gap-3.5",
         align === "center" ? "items-center text-center" : "items-start",
         className,
       )}
@@ -43,7 +43,7 @@ export function SectionHeading({
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
-          "font-display text-4xl leading-[1.05] text-balance",
+          "font-display text-[clamp(1.85rem,5vw,4rem)] leading-[1.05] text-balance",
           "sm:text-5xl md:text-6xl",
           align === "center" ? "max-w-3xl" : "max-w-3xl",
         )}

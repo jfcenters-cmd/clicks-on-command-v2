@@ -10,7 +10,7 @@ export function PreferredVendor() {
   return (
     <section
       id="partner"
-      className="scroll-mt-nav relative overflow-hidden border-y border-white/[0.05] py-20 sm:py-24"
+      className="scroll-mt-nav relative overflow-hidden border-y border-white/[0.05] py-12 sm:py-24"
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-1/2 h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.05] blur-3xl" />
@@ -24,31 +24,19 @@ export function PreferredVendor() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.7, delay: 0.05 }}
-            className="max-w-3xl font-display text-4xl leading-[1.05] text-balance sm:text-5xl md:text-[3.4rem]"
+            className="max-w-3xl font-display text-[clamp(1.75rem,5.5vw,3.4rem)] leading-[1.08] text-balance sm:text-5xl md:text-[3.4rem]"
           >
             Preferred marketing vendor for{" "}
             <span className="text-accent italic">Contour Light® Research LLC.</span>
           </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:text-lg"
-          >
-            <span className="text-foreground/90">Clicks On Command</span> holds that
-            designation for clinic prepay funnels, conversion systems, and
-            DocuMarketing — not generic med-spa marketing.
-          </motion.p>
         </div>
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-          className="mt-10"
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+          className="mt-8 sm:mt-11"
         >
           <PartnerLockup />
         </motion.div>
@@ -59,7 +47,7 @@ export function PreferredVendor() {
 
 function PartnerLockup() {
   return (
-    <GlassCard className="relative overflow-hidden px-6 py-10 sm:px-10 sm:py-11">
+    <GlassCard className="relative overflow-hidden px-5 py-7 sm:px-10 sm:py-11">
       <div className="mx-auto flex max-w-lg flex-col items-center text-center">
         <div
           className="flex h-12 w-12 items-center justify-center rounded-full border border-accent/35 bg-accent/[0.08] text-accent"
@@ -68,7 +56,7 @@ function PartnerLockup() {
           <Award className="h-5 w-5" strokeWidth={1.5} />
         </div>
 
-        <p className="mt-6 font-display text-2xl leading-tight tracking-tight text-foreground sm:text-3xl">
+        <p className="mt-4 font-display text-xl leading-tight tracking-tight text-foreground sm:mt-6 sm:text-2xl md:text-3xl">
           Preferred marketing vendor
         </p>
         <p className="mt-2 max-w-md text-[15px] leading-relaxed text-foreground/65 sm:text-base">
@@ -76,7 +64,7 @@ function PartnerLockup() {
           acquisition, and patient education.
         </p>
 
-        <div className="mt-8 w-full border-t border-white/[0.08] pt-8">
+        <div className="mt-6 w-full border-t border-white/[0.08] pt-6 sm:mt-8 sm:pt-8">
           <ContourLightLogo />
         </div>
       </div>
@@ -86,7 +74,7 @@ function PartnerLockup() {
 
 function ContourLightLogo() {
   return (
-    <div className="relative flex w-full max-w-[260px] justify-center">
+    <div className="relative mx-auto flex w-full max-w-[260px] justify-center">
       <Image
         src="/partners/contour-light-logo.png"
         alt="Contour Light® — Red Light Therapy"
