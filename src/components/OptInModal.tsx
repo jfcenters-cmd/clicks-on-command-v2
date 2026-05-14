@@ -137,45 +137,47 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
               "relative z-10 flex w-full max-w-md flex-col overflow-hidden",
-              "rounded-t-[1.25rem] border border-white/10 border-b-0 bg-surface/95 backdrop-blur-2xl",
+              "rounded-t-[1.25rem] border border-white/10 border-b-0 bg-surface/[0.97] backdrop-blur-xl",
               "shadow-[0_50px_120px_-20px_rgba(0,0,0,0.9)]",
               "max-h-[min(92dvh,720px)] sm:rounded-3xl sm:border-b",
             )}
           >
             <div
               aria-hidden
-              className="pointer-events-none absolute -top-32 left-1/2 h-64 w-[140%] -translate-x-1/2 rounded-full bg-accent/10 blur-3xl"
+              className="pointer-events-none absolute -top-24 left-1/2 h-56 w-[120%] max-md:hidden -translate-x-1/2 rounded-full bg-accent/12 blur-3xl"
             />
 
-            <div className="relative flex shrink-0 items-start justify-between gap-3 border-b border-white/[0.06] px-4 py-4 sm:gap-4 sm:px-8 sm:py-5">
-              <div className="min-w-0 pr-2">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent/80">
-                  Before you pick a time
-                </p>
-                <h3
-                  id="optin-dialog-title"
-                  className="mt-1.5 font-display text-xl text-balance sm:text-2xl"
-                >
-                  Quick details
-                </h3>
-                <p className="mt-2 text-[12px] leading-snug text-foreground/60 sm:mt-2.5">
-                  We&apos;ll confirm on the next screen, then open the calendar.
-                </p>
-              </div>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="absolute right-3 top-3 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-foreground/80 transition-colors hover:bg-white/[0.12] hover:text-foreground active:scale-95 sm:right-5 sm:top-5"
+            >
+              <X className="h-5 w-5" aria-hidden />
+            </button>
 
-              <button
-                type="button"
-                onClick={onClose}
-                aria-label="Close"
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-foreground/70 transition-colors hover:bg-white/[0.08] hover:text-foreground active:scale-95"
+            <div className="relative shrink-0 border-b border-white/[0.08] px-6 pb-5 pl-14 pr-14 pt-7 text-center sm:px-10 sm:pb-6 sm:pt-8">
+              <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">
+                Before you pick a time
+              </p>
+              <h3
+                id="optin-dialog-title"
+                className="mx-auto mt-3 max-w-sm font-display text-[1.65rem] leading-[1.12] tracking-tight text-balance text-foreground sm:text-[1.85rem]"
               >
-                <X className="h-5 w-5" aria-hidden />
-              </button>
+                A few{" "}
+                <strong className="font-semibold text-accent">quick details</strong>
+              </h3>
+              <p className="mx-auto mt-3 max-w-sm text-[15px] leading-relaxed text-foreground/80 sm:mt-4 sm:text-base sm:leading-relaxed">
+                We&apos;ll <strong className="font-semibold text-foreground">confirm</strong>{" "}
+                your info on the next screen, then open your{" "}
+                <strong className="font-semibold text-foreground">calendar</strong>{" "}
+                so you can grab a slot.
+              </p>
             </div>
 
             <form
               onSubmit={onSubmit}
-              className="relative flex flex-col gap-4 overflow-y-auto px-4 py-5 sm:px-8 sm:py-6"
+              className="relative flex flex-col gap-5 overflow-y-auto px-6 py-6 sm:px-10 sm:py-7"
             >
               <input
                 type="text"
@@ -188,8 +190,8 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
                 className="pointer-events-none absolute left-0 top-0 h-0 w-0 opacity-0"
               />
 
-              <label className="block">
-                <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">
+              <label className="block text-center">
+                <span className="mb-2 block text-[13px] font-semibold tracking-wide text-foreground/85">
                   First name
                 </span>
                 <input
@@ -198,13 +200,13 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
                   autoComplete="given-name"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-[15px] text-foreground outline-none ring-accent/30 transition-[border-color,box-shadow] placeholder:text-foreground/25 focus:border-accent/40 focus:ring-2"
+                  className="w-full rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 py-3.5 text-center text-[16px] text-foreground outline-none ring-accent/25 transition-[border-color,box-shadow] placeholder:text-foreground/35 placeholder:text-center focus:border-accent/45 focus:ring-2 sm:text-[15px]"
                   placeholder="Jordan"
                 />
               </label>
 
-              <label className="block">
-                <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">
+              <label className="block text-center">
+                <span className="mb-2 block text-[13px] font-semibold tracking-wide text-foreground/85">
                   Email
                 </span>
                 <input
@@ -214,25 +216,25 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-[15px] text-foreground outline-none ring-accent/30 transition-[border-color,box-shadow] placeholder:text-foreground/25 focus:border-accent/40 focus:ring-2"
+                  className="w-full rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 py-3.5 text-center text-[16px] text-foreground outline-none ring-accent/25 transition-[border-color,box-shadow] placeholder:text-foreground/35 placeholder:text-center focus:border-accent/45 focus:ring-2 sm:text-[15px]"
                   placeholder="you@clinic.com"
                 />
               </label>
 
-              <div className="block">
-                <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">
+              <div className="block text-center">
+                <span className="mb-2 block text-[13px] font-semibold tracking-wide text-foreground/85">
                   Phone
                 </span>
-                <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row sm:gap-3">
                   <select
                     name="phoneCountry"
                     value={phoneIso}
                     aria-label="Country"
                     onChange={(e) => setPhoneIso(e.target.value)}
                     className={cn(
-                      "shrink-0 cursor-pointer rounded-xl border border-white/[0.1] bg-white/[0.03]",
-                      "px-3 py-3 text-[14px] text-foreground outline-none ring-accent/30 sm:max-w-[min(210px,100%)]",
-                      "focus:border-accent/40 focus:ring-2",
+                      "shrink-0 cursor-pointer rounded-xl border border-white/[0.12] bg-white/[0.06]",
+                      "px-3 py-3.5 text-center text-[15px] font-medium text-foreground outline-none ring-accent/25 sm:max-w-[min(220px,100%)]",
+                      "focus:border-accent/45 focus:ring-2",
                     )}
                   >
                     {PHONE_REGIONS.map((r) => (
@@ -250,9 +252,9 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
                     value={nationalPhone}
                     onChange={(e) => setNationalPhone(e.target.value)}
                     className={cn(
-                      "min-h-11 min-w-0 flex-1 rounded-xl border border-white/[0.1]",
-                      "bg-white/[0.03] px-4 py-3 text-[15px] text-foreground outline-none ring-accent/30",
-                      "placeholder:text-foreground/25 focus:border-accent/40 focus:ring-2",
+                      "min-h-11 min-w-0 flex-1 rounded-xl border border-white/[0.12]",
+                      "bg-white/[0.06] px-4 py-3.5 text-center text-[16px] text-foreground outline-none ring-accent/25 sm:text-[15px]",
+                      "placeholder:text-foreground/35 placeholder:text-center focus:border-accent/45 focus:ring-2",
                     )}
                     placeholder={
                       phoneIso === "US" || phoneIso === "CA"
@@ -261,23 +263,29 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
                     }
                   />
                 </div>
-                <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/30">
-                  Code defaults to your device region ({region.dial}).
+                <p className="mt-2 text-[12px] leading-snug text-foreground/55 sm:text-[13px]">
+                  Country code defaults to your region:{" "}
+                  <strong className="font-semibold text-foreground/80">
+                    {region.dial}
+                  </strong>
                 </p>
               </div>
 
               {error && (
                 <p
                   role="alert"
-                  className="text-center text-[13px] text-red-300/90"
+                  className="rounded-lg bg-red-500/10 px-3 py-2.5 text-center text-[14px] font-medium leading-snug text-red-200"
                 >
                   {error}
                 </p>
               )}
 
-              <p className="text-center text-[11px] leading-relaxed text-foreground/40">
-                By continuing, you agree we may contact you about this request.
-                Next you&apos;ll see a short thank-you screen, then the calendar.
+              <p className="text-center text-[13px] leading-relaxed text-foreground/55 sm:text-[14px]">
+                By continuing, you agree we may{" "}
+                <strong className="font-semibold text-foreground/75">contact you</strong>{" "}
+                about this request. Next: a short{" "}
+                <strong className="font-semibold text-foreground/75">thank-you</strong>, then
+                your calendar.
               </p>
 
               <Button
