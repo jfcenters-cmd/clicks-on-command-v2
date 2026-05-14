@@ -6,26 +6,43 @@ import { SectionHeading } from "../ui/SectionHeading";
 import { AnimatedNumber } from "../ui/AnimatedNumber";
 import { GlassCard } from "../ui/GlassCard";
 
-type Stat = {
-  label: string;
-  value: number;
-  prefix?: string;
-  suffix?: string;
-  format?: (n: number) => string;
-};
+type Stat =
+  | {
+      kind: "number";
+      label: string;
+      value: number;
+      prefix?: string;
+      suffix?: string;
+      format?: (n: number) => string;
+    }
+  | {
+      kind: "text";
+      label: string;
+      headline: string;
+    };
 
 const stats: Stat[] = [
-  { label: "Prepays Generated", value: 11400, suffix: "+" },
-  { label: "Clients Served", value: 200, suffix: "+" },
   {
-    label: "Revenue Generated",
-    value: 42,
-    prefix: "$",
-    suffix: "M+",
-    format: (n) => n.toString(),
+    kind: "number",
+    label: "Paying customers",
+    value: 100_000,
+    suffix: "+",
+    format: (n) =>
+      n >= 1_000_000
+        ? `${Math.floor(n / 1_000_000)}M`
+        : n >= 1_000
+          ? `${Math.floor(n / 1_000)}K`
+          : n.toLocaleString("en-US"),
+  },
+  { kind: "number", label: "Clients served", value: 200, suffix: "+" },
+  {
+    kind: "text",
+    label: "Client revenue (aggregate)",
+    headline: "Millions+",
   },
   {
-    label: "Ad Spend Managed",
+    kind: "number",
+    label: "Ad spend managed",
     value: 1,
     prefix: "$",
     suffix: "M+",
@@ -94,13 +111,19 @@ export function Results() {
               key={s.label}
               className="relative bg-background/40 px-3.5 py-5 transition-colors hover:bg-white/[0.02] sm:px-7 sm:py-9"
             >
-              <div className="mt-0.5 flex items-baseline gap-1 font-display text-4xl leading-none tracking-tight sm:mt-1 sm:text-6xl">
-                {s.prefix && (
-                  <span className="text-accent/90">{s.prefix}</span>
-                )}
-                <AnimatedNumber value={s.value} format={s.format} />
-                {s.suffix && (
-                  <span className="text-foreground/60">{s.suffix}</span>
+              <div className="mt-0.5 flex flex-wrap items-baseline gap-1 font-display text-4xl leading-none tracking-tight sm:mt-1 sm:text-6xl">
+                {s.kind === "text" ? (
+                  <span className="text-foreground">{s.headline}</span>
+                ) : (
+                  <>
+                    {s.prefix && (
+                      <span className="text-accent/90">{s.prefix}</span>
+                    )}
+                    <AnimatedNumber value={s.value} format={s.format} />
+                    {s.suffix && (
+                      <span className="text-foreground/60">{s.suffix}</span>
+                    )}
+                  </>
                 )}
               </div>
               <p className="mt-2 text-[12px] tracking-tight text-foreground/65 sm:mt-3 sm:text-[13px]">
