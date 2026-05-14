@@ -1,11 +1,5 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Eyebrow } from "./Eyebrow";
 import { cn } from "@/lib/cn";
-
-const view = { once: true, margin: "-60px" as const, amount: 0.2 as const };
-const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 type SectionHeadingProps = {
   eyebrow?: string;
@@ -23,11 +17,7 @@ export function SectionHeading({
   className,
 }: SectionHeadingProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={view}
-      transition={{ duration: 0.7, ease }}
+    <div
       className={cn(
         "flex flex-col gap-2.5 sm:gap-3.5",
         align === "center" ? "items-center text-center" : "items-start",
@@ -54,6 +44,6 @@ export function SectionHeading({
           {description}
         </p>
       )}
-    </motion.div>
+    </div>
   );
 }

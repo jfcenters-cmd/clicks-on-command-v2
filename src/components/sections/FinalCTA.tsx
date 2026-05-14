@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { useCalendly } from "../CalendlyProvider";
@@ -19,13 +18,7 @@ export function FinalCTA() {
       </div>
 
       <Container size="default">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px", amount: 0.2 }}
-          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col items-center text-center"
-        >
+        <div className="flex flex-col items-center text-center">
           <h2 className="max-w-4xl font-display text-[clamp(2rem,6vw,5rem)] leading-[0.98] text-balance sm:text-[clamp(2.5rem,6.5vw,5rem)]">
             Stop chasing leads.
             <br />
@@ -64,7 +57,7 @@ export function FinalCTA() {
               </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
       </Container>
     </section>
   );

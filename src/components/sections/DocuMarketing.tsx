@@ -1,11 +1,6 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Container } from "../ui/Container";
 import { Eyebrow } from "../ui/Eyebrow";
 import { GlassCard } from "../ui/GlassCard";
-
-const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 const outcomes = [
   {
@@ -22,7 +17,8 @@ const outcomes = [
   },
 ];
 
-const view = { once: true, margin: "-60px" as const, amount: 0.2 as const };
+const prose =
+  "mx-auto max-w-2xl text-center text-pretty text-[15px] leading-[1.72] text-foreground/75 sm:text-[16px] sm:leading-[1.75]";
 
 export function DocuMarketing() {
   return (
@@ -36,27 +32,15 @@ export function DocuMarketing() {
       />
 
       <Container size="narrow">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={view}
-          transition={{ duration: 0.7, ease }}
-          className="mx-auto flex w-full max-w-2xl flex-col items-center text-center"
-        >
+        <div className="mx-auto flex w-full max-w-2xl flex-col items-center text-center">
           <Eyebrow className="justify-center">DocuMarketing</Eyebrow>
           <h2 className="mt-3 w-full max-w-xl font-display text-[clamp(1.6rem,4.2vw,2.85rem)] leading-[1.1] tracking-tight text-balance sm:mt-4 sm:max-w-2xl sm:leading-[1.08]">
             I spent 7 years figuring out why most marketing sucks{" "}
             <span className="text-accent italic">(so you don&apos;t have to).</span>
           </h2>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={view}
-          transition={{ duration: 0.72, delay: 0.04, ease }}
-          className="mx-auto mt-6 max-w-2xl space-y-4 text-pretty text-[15px] leading-[1.72] text-foreground/75 sm:mt-10 sm:space-y-5 sm:leading-[1.75] sm:text-[16px]"
-        >
+        <div className={`mt-6 space-y-4 sm:mt-10 sm:space-y-5 ${prose}`}>
           <p>
             After studying every marketing method I could get my hands on for 7
             years, I realized something that pissed me off: they were all the same
@@ -72,17 +56,11 @@ export function DocuMarketing() {
             tire-kickers who never showed up or people who wanted discounts
             instead of results.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={view}
-          transition={{ duration: 0.72, delay: 0.06, ease }}
-          className="mx-auto mt-6 max-w-2xl sm:mt-8"
-        >
-          <GlassCard className="border-accent/25 bg-gradient-to-b from-accent/[0.06] to-transparent p-5 sm:p-8">
-            <p className="font-display text-xl leading-snug text-foreground sm:text-2xl">
+        <div className="mx-auto mt-6 max-w-2xl sm:mt-8">
+          <GlassCard className="border-accent/25 bg-gradient-to-b from-accent/[0.06] to-transparent p-5 text-center sm:p-8">
+            <p className="font-display text-xl leading-snug text-foreground text-balance sm:text-2xl">
               So I built DocuMarketing. Simple concept:{" "}
               <span className="text-accent italic">
                 stop trying to sell and start documenting what you actually do.
@@ -93,15 +71,9 @@ export function DocuMarketing() {
               process that builds trust faster than any sales pitch ever could.
             </p>
           </GlassCard>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={view}
-          transition={{ duration: 0.72, delay: 0.08, ease }}
-          className="mx-auto mt-5 max-w-2xl space-y-4 text-pretty text-[15px] leading-[1.72] text-foreground/75 sm:mt-8 sm:space-y-5 sm:text-[16px]"
-        >
+        <div className={`mt-5 sm:mt-8 ${prose}`}>
           <p>
             Before I ever touched a client&apos;s business with this, I tested it
             myself. Built two entirely new businesses on it — including a family
@@ -109,19 +81,13 @@ export function DocuMarketing() {
             Been running this in body contouring since 2019 because it works and
             these are clients I actually want to work with.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={view}
-          transition={{ duration: 0.68, delay: 0.1, ease }}
-          className="mx-auto mt-7 grid max-w-4xl gap-2.5 sm:mt-12 sm:gap-3 md:grid-cols-3"
-        >
+        <div className="mx-auto mt-7 grid max-w-4xl gap-2.5 text-center sm:mt-12 sm:gap-3 md:grid-cols-3">
           {outcomes.map((o) => (
             <div
               key={o.title}
-              className="h-full rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 sm:p-6"
+              className="flex h-full flex-col items-center rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 sm:p-6"
             >
               <div className="h-px w-10 bg-accent/70" />
               <h3 className="mt-3 font-display text-base leading-snug tracking-tight text-foreground sm:mt-4 sm:text-lg">
@@ -132,17 +98,11 @@ export function DocuMarketing() {
               </p>
             </div>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={view}
-          transition={{ duration: 0.55, delay: 0.12, ease }}
-          className="mx-auto mt-6 max-w-2xl text-center font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/40 sm:mt-8"
-        >
+        <p className="mx-auto mt-6 max-w-2xl text-center font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/40 sm:mt-8">
           Past performance is not a guarantee of your results.
-        </motion.p>
+        </p>
       </Container>
     </section>
   );

@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { TrendingUp, Flame } from "lucide-react";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
@@ -89,13 +88,7 @@ export function Results() {
           description="Aggregate figures from our body contouring accounts. Your results will depend on your market and execution."
         />
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px", amount: 0.2 }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] sm:mt-12 lg:grid-cols-4"
-        >
+        <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] sm:mt-12 lg:grid-cols-4">
           {stats.map((s) => (
             <div
               key={s.label}
@@ -115,16 +108,10 @@ export function Results() {
               </p>
             </div>
           ))}
-        </motion.div>
+        </div>
 
         <div className="mt-8 sm:mt-14">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px", amount: 0.2 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="grid gap-3 md:grid-cols-2 md:gap-4"
-          >
+          <div className="grid gap-3 md:grid-cols-2 md:gap-4">
             {clientResults.map((r) => {
               const Icon = r.icon;
               return (
@@ -171,7 +158,7 @@ export function Results() {
                 </div>
               );
             })}
-          </motion.div>
+          </div>
 
           <p className="mx-auto mt-6 max-w-xl text-center font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/35 sm:mt-8">
             Individual results vary · Outcomes depend on clinic, market, and execution
