@@ -59,10 +59,8 @@ export function Hero() {
             custom={1}
             className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:mt-6 sm:text-lg"
           >
-            We engineer paid advertising, conversion systems, and{" "}
-            <span className="text-foreground/90">DocuMarketing</span> frameworks
-            that turn ad spend into prepaid appointments — before patients ever
-            walk into your clinic.
+            We get you paying customers that actually want your help — and we do
+            all the heavy lifting.
           </motion.p>
 
           <motion.div

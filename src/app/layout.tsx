@@ -28,7 +28,7 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://clicksoncommand.com";
 const TITLE = "Clicks On Command — Predictable Prepays for Body Contouring Clinics";
 const DESCRIPTION =
-  "Clicks On Command engineers paid advertising, conversion systems, and DocuMarketing frameworks that turn body contouring clinics into predictable prepay machines. Preferred vendor for Contour Light® Research LLC.";
+  "We get body contouring clinics paying customers who actually want their help — and we do the heavy lifting (ads, conversion, DocuMarketing). Preferred vendor for Contour Light® Research LLC.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
