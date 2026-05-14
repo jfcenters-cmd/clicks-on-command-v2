@@ -17,14 +17,16 @@ const CALENDLY_BASE = getCalendlyBaseUrl();
 
 export function ThankYouInner() {
   const [guestName, setGuestName] = useState<string | null>(null);
-  const [embedSrc, setEmbedSrc] = useState(() =>
-    appendCalendlyInlineParams(CALENDLY_BASE),
-  );
+  /** Set in useLayoutEffect so `embed_domain` matches `window.location.host` (required for hide_gdpr_banner in iframe). */
+  const [embedSrc, setEmbedSrc] = useState<string | null>(null);
 
   useLayoutEffect(() => {
     const prefill = readBookingPrefill();
     setGuestName(prefill?.name ?? null);
-    const next = appendCalendlyInlineParams(CALENDLY_BASE, prefill ?? undefined);
+    const next = appendCalendlyInlineParams(CALENDLY_BASE, {
+      prefill: prefill ?? undefined,
+      embedDomain: window.location.host,
+    });
     setEmbedSrc((prev) => (prev === next ? prev : next));
   }, []);
 
@@ -36,7 +38,7 @@ export function ThankYouInner() {
   return (
     <>
       <Navbar />
-      <main className="relative pb-12 pt-24 sm:pb-20 sm:pt-32">
+      <main className="relative pb-12 pt-20 sm:pb-20 sm:pt-28">
         <Container size="default" className="max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -60,7 +62,7 @@ export function ThankYouInner() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-8 scroll-mt-28 sm:mt-10 sm:scroll-mt-36"
+            className="mt-6 scroll-mt-24 sm:mt-8 sm:scroll-mt-32"
           >
             <GlassCard className="overflow-hidden p-1 sm:p-2">
               <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0b0b0d] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]">
@@ -72,12 +74,19 @@ export function ThankYouInner() {
                     Schedule your call
                   </p>
                 </div>
-                <div className="relative min-h-[min(78dvh,680px)] w-full sm:min-h-[640px] lg:min-h-[660px]">
-                  <iframe
-                    title="Schedule a strategy call with Clicks On Command"
-                    src={embedSrc}
-                    className="absolute inset-0 h-full w-full border-0"
-                  />
+                <div className="relative min-h-[min(72dvh,620px)] w-full sm:min-h-[580px] lg:min-h-[600px]">
+                  {embedSrc ? (
+                    <iframe
+                      title="Schedule a strategy call with Clicks On Command"
+                      src={embedSrc}
+                      className="absolute inset-0 h-full w-full border-0"
+                    />
+                  ) : (
+                    <div
+                      className="absolute inset-0 animate-pulse bg-white/[0.04]"
+                      aria-hidden
+                    />
+                  )}
                 </div>
               </div>
             </GlassCard>

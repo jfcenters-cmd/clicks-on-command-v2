@@ -60,7 +60,12 @@ export async function syncBeehiivSubscription(
 ): Promise<void> {
   const token = process.env.BEEHIIV_API_KEY?.trim();
   const publicationId = process.env.BEEHIIV_PUBLICATION_ID?.trim();
-  if (!token || !publicationId) return;
+  if (!token || !publicationId) {
+    console.warn(
+      "[optin] Beehiiv skipped: set BEEHIIV_API_KEY and BEEHIIV_PUBLICATION_ID for production.",
+    );
+    return;
+  }
 
   const body: Record<string, unknown> = {
     email: data.email,
