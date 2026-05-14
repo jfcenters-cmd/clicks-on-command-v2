@@ -1,4 +1,8 @@
 import { NextResponse } from "next/server";
+import {
+  syncBeehiivSubscription,
+  syncCloseLead,
+} from "@/lib/optinDestinations";
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -52,15 +56,22 @@ export async function POST(request: Request) {
       submittedAt: new Date().toISOString(),
     };
 
-    if (webhook) {
-      await fetch(webhook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      }).catch(() => {
-        /* booking success still succeeds */
-      });
-    }
+    await Promise.allSettled([
+      webhook
+        ? fetch(webhook, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          })
+        : Promise.resolve(),
+      syncCloseLead({
+        firstName,
+        email,
+        phone,
+        ...(phoneCountry ? { phoneCountry } : {}),
+      }),
+      syncBeehiivSubscription({ firstName, email }),
+    ]);
 
     return NextResponse.json({ ok: true });
   } catch {
