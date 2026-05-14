@@ -177,7 +177,7 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
 
             <form
               onSubmit={onSubmit}
-              className="relative flex flex-col gap-5 overflow-y-auto px-6 py-6 sm:px-10 sm:py-7"
+              className="relative flex flex-col gap-4 overflow-y-auto px-4 py-5 sm:px-8 sm:py-6"
             >
               <input
                 type="text"
@@ -190,8 +190,8 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
                 className="pointer-events-none absolute left-0 top-0 h-0 w-0 opacity-0"
               />
 
-              <label className="block text-center">
-                <span className="mb-2 block text-[13px] font-semibold tracking-wide text-foreground/85">
+              <label className="block">
+                <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">
                   First name
                 </span>
                 <input
@@ -200,13 +200,13 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
                   autoComplete="given-name"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 py-3.5 text-center text-[16px] text-foreground outline-none ring-accent/25 transition-[border-color,box-shadow] placeholder:text-foreground/35 placeholder:text-center focus:border-accent/45 focus:ring-2 sm:text-[15px]"
+                  className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-[15px] text-foreground outline-none ring-accent/30 transition-[border-color,box-shadow] placeholder:text-foreground/25 focus:border-accent/40 focus:ring-2"
                   placeholder="Jordan"
                 />
               </label>
 
-              <label className="block text-center">
-                <span className="mb-2 block text-[13px] font-semibold tracking-wide text-foreground/85">
+              <label className="block">
+                <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">
                   Email
                 </span>
                 <input
@@ -216,25 +216,25 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 py-3.5 text-center text-[16px] text-foreground outline-none ring-accent/25 transition-[border-color,box-shadow] placeholder:text-foreground/35 placeholder:text-center focus:border-accent/45 focus:ring-2 sm:text-[15px]"
+                  className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-[15px] text-foreground outline-none ring-accent/30 transition-[border-color,box-shadow] placeholder:text-foreground/25 focus:border-accent/40 focus:ring-2"
                   placeholder="you@clinic.com"
                 />
               </label>
 
-              <div className="block text-center">
-                <span className="mb-2 block text-[13px] font-semibold tracking-wide text-foreground/85">
+              <div className="block">
+                <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">
                   Phone
                 </span>
-                <div className="flex flex-col gap-3 sm:flex-row sm:gap-3">
+                <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
                   <select
                     name="phoneCountry"
                     value={phoneIso}
                     aria-label="Country"
                     onChange={(e) => setPhoneIso(e.target.value)}
                     className={cn(
-                      "shrink-0 cursor-pointer rounded-xl border border-white/[0.12] bg-white/[0.06]",
-                      "px-3 py-3.5 text-center text-[15px] font-medium text-foreground outline-none ring-accent/25 sm:max-w-[min(220px,100%)]",
-                      "focus:border-accent/45 focus:ring-2",
+                      "shrink-0 cursor-pointer rounded-xl border border-white/[0.1] bg-white/[0.03]",
+                      "px-3 py-3 text-[14px] text-foreground outline-none ring-accent/30 sm:max-w-[min(210px,100%)]",
+                      "focus:border-accent/40 focus:ring-2",
                     )}
                   >
                     {PHONE_REGIONS.map((r) => (
@@ -252,9 +252,9 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
                     value={nationalPhone}
                     onChange={(e) => setNationalPhone(e.target.value)}
                     className={cn(
-                      "min-h-11 min-w-0 flex-1 rounded-xl border border-white/[0.12]",
-                      "bg-white/[0.06] px-4 py-3.5 text-center text-[16px] text-foreground outline-none ring-accent/25 sm:text-[15px]",
-                      "placeholder:text-foreground/35 placeholder:text-center focus:border-accent/45 focus:ring-2",
+                      "min-h-11 min-w-0 flex-1 rounded-xl border border-white/[0.1]",
+                      "bg-white/[0.03] px-4 py-3 text-[15px] text-foreground outline-none ring-accent/30",
+                      "placeholder:text-foreground/25 focus:border-accent/40 focus:ring-2",
                     )}
                     placeholder={
                       phoneIso === "US" || phoneIso === "CA"
@@ -263,29 +263,23 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
                     }
                   />
                 </div>
-                <p className="mt-2 text-[12px] leading-snug text-foreground/55 sm:text-[13px]">
-                  Country code defaults to your region:{" "}
-                  <strong className="font-semibold text-foreground/80">
-                    {region.dial}
-                  </strong>
+                <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/30">
+                  Code defaults to your device region ({region.dial}).
                 </p>
               </div>
 
               {error && (
                 <p
                   role="alert"
-                  className="rounded-lg bg-red-500/10 px-3 py-2.5 text-center text-[14px] font-medium leading-snug text-red-200"
+                  className="text-center text-[13px] text-red-300/90"
                 >
                   {error}
                 </p>
               )}
 
-              <p className="text-center text-[13px] leading-relaxed text-foreground/55 sm:text-[14px]">
-                By continuing, you agree we may{" "}
-                <strong className="font-semibold text-foreground/75">contact you</strong>{" "}
-                about this request. Next: a short{" "}
-                <strong className="font-semibold text-foreground/75">thank-you</strong>, then
-                your calendar.
+              <p className="text-center text-[11px] leading-relaxed text-foreground/40">
+                By continuing, you agree we may contact you about this request.
+                Next you&apos;ll see a short thank-you screen, then the calendar.
               </p>
 
               <Button
