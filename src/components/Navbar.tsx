@@ -20,11 +20,17 @@ export function Navbar() {
   const pathname = usePathname();
   const scrolled = useScrolledPast(12);
   const [open, setOpen] = useState(false);
-  const { open: openBooking, tryOpenStoredCalendarBooking } = useCalendly();
+  const { open: openBooking } = useCalendly();
 
   function handleBookClick() {
     setOpen(false);
-    if (pathname === "/thank-you" && tryOpenStoredCalendarBooking()) return;
+    if (pathname === "/thank-you") {
+      document.getElementById("schedule")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      return;
+    }
     openBooking();
   }
 

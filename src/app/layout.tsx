@@ -5,9 +5,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CalendlyProvider } from "@/components/CalendlyProvider";
 import "./globals.css";
 
-const CALENDLY_URL =
-  process.env.NEXT_PUBLIC_CALENDLY_URL ??
-  "https://calendly.com/clicksoncommand/30min";
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim();
 
 const inter = Inter({
@@ -113,7 +110,7 @@ fbq('track', 'PageView');`,
             </noscript>
           </>
         ) : null}
-        <CalendlyProvider url={CALENDLY_URL}>{children}</CalendlyProvider>
+        <CalendlyProvider>{children}</CalendlyProvider>
         <SpeedInsights />
       </body>
     </html>
