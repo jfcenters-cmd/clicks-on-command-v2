@@ -22,6 +22,8 @@ const outcomes = [
   },
 ];
 
+const view = { once: true, margin: "-60px" as const, amount: 0.2 as const };
+
 export function DocuMarketing() {
   return (
     <section
@@ -34,33 +36,25 @@ export function DocuMarketing() {
       />
 
       <Container size="narrow">
-        <div className="mx-auto max-w-2xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease }}
-          >
-            <Eyebrow>DocuMarketing</Eyebrow>
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, delay: 0.05, ease }}
-            className="mt-3 font-display text-[clamp(1.6rem,4.2vw,2.85rem)] leading-[1.08] tracking-tight text-balance sm:mt-4"
-          >
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={view}
+          transition={{ duration: 0.7, ease }}
+          className="mx-auto max-w-2xl text-center"
+        >
+          <Eyebrow>DocuMarketing</Eyebrow>
+          <h2 className="mt-3 font-display text-[clamp(1.6rem,4.2vw,2.85rem)] leading-[1.08] tracking-tight text-balance sm:mt-4">
             I spent 7 years figuring out why most marketing sucks{" "}
             <span className="text-accent italic">(so you don&apos;t have to).</span>
-          </motion.h2>
-        </div>
+          </h2>
+        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.75, delay: 0.1, ease }}
+          viewport={view}
+          transition={{ duration: 0.72, delay: 0.04, ease }}
           className="mx-auto mt-6 max-w-2xl space-y-4 text-pretty text-[15px] leading-[1.72] text-foreground/75 sm:mt-10 sm:space-y-5 sm:leading-[1.75] sm:text-[16px]"
         >
           <p>
@@ -81,10 +75,10 @@ export function DocuMarketing() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.75, delay: 0.15, ease }}
+          viewport={view}
+          transition={{ duration: 0.72, delay: 0.06, ease }}
           className="mx-auto mt-6 max-w-2xl sm:mt-8"
         >
           <GlassCard className="border-accent/25 bg-gradient-to-b from-accent/[0.06] to-transparent p-5 sm:p-8">
@@ -102,10 +96,10 @@ export function DocuMarketing() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.75, delay: 0.2, ease }}
+          viewport={view}
+          transition={{ duration: 0.72, delay: 0.08, ease }}
           className="mx-auto mt-5 max-w-2xl space-y-4 text-pretty text-[15px] leading-[1.72] text-foreground/75 sm:mt-8 sm:space-y-5 sm:text-[16px]"
         >
           <p>
@@ -117,33 +111,34 @@ export function DocuMarketing() {
           </p>
         </motion.div>
 
-        <div className="mx-auto mt-7 grid max-w-4xl gap-2.5 sm:mt-12 sm:gap-3 md:grid-cols-3">
-          {outcomes.map((o, i) => (
-            <motion.div
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={view}
+          transition={{ duration: 0.68, delay: 0.1, ease }}
+          className="mx-auto mt-7 grid max-w-4xl gap-2.5 sm:mt-12 sm:gap-3 md:grid-cols-3"
+        >
+          {outcomes.map((o) => (
+            <div
               key={o.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.65, delay: 0.25 + i * 0.07, ease }}
+              className="h-full rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 sm:p-6"
             >
-              <div className="h-full rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 sm:p-6">
-                <div className="h-px w-10 bg-accent/70" />
-                <h3 className="mt-3 font-display text-base leading-snug tracking-tight text-foreground sm:mt-4 sm:text-lg">
-                  {o.title}
-                </h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-foreground/60">
-                  {o.body}
-                </p>
-              </div>
-            </motion.div>
+              <div className="h-px w-10 bg-accent/70" />
+              <h3 className="mt-3 font-display text-base leading-snug tracking-tight text-foreground sm:mt-4 sm:text-lg">
+                {o.title}
+              </h3>
+              <p className="mt-2 text-[13px] leading-relaxed text-foreground/60">
+                {o.body}
+              </p>
+            </div>
           ))}
-        </div>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.35 }}
+          viewport={view}
+          transition={{ duration: 0.55, delay: 0.12, ease }}
           className="mx-auto mt-6 max-w-2xl text-center font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/40 sm:mt-8"
         >
           Past performance is not a guarantee of your results.

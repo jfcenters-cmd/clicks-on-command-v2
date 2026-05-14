@@ -123,14 +123,15 @@ function HeroBackground() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 2, ease: "easeOut" }}
-        className="absolute left-1/2 top-[12%] h-[640px] w-[640px] -translate-x-1/2 rounded-full bg-accent/15 blur-[120px]"
+        className="absolute left-1/2 top-[12%] h-[min(90vw,380px)] w-[min(90vw,380px)] -translate-x-1/2 rounded-full bg-accent/12 blur-[56px] sm:h-[480px] sm:w-[480px] sm:blur-[88px] md:h-[640px] md:w-[640px] md:bg-accent/15 md:blur-[120px]"
       />
-      <div className="absolute left-1/2 top-[8%] h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-accent/10 blur-[80px]" />
+      <div className="absolute left-1/2 top-[8%] h-[min(70vw,280px)] w-[min(70vw,280px)] -translate-x-1/2 rounded-full bg-accent/10 blur-[48px] sm:h-[360px] sm:w-[360px] sm:blur-[64px] md:blur-[80px]" />
 
+      <div className="absolute inset-x-0 top-1/3 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent md:hidden" />
       <motion.div
         animate={{ opacity: [0.15, 0.35, 0.15] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-x-0 top-1/3 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent"
+        className="absolute inset-x-0 top-1/3 hidden h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent md:block"
       />
 
       <div className="absolute inset-0 noise opacity-40 mix-blend-overlay" />

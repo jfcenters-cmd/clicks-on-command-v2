@@ -74,7 +74,7 @@ export function Results() {
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10"
       >
-        <div className="absolute left-1/2 top-1/2 h-[500px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.04] blur-3xl" />
+        <div className="absolute left-1/2 top-1/2 hidden h-[500px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.04] blur-3xl sm:block" />
       </div>
 
       <Container size="wide">
@@ -89,14 +89,16 @@ export function Results() {
           description="Aggregate figures from our body contouring accounts. Your results will depend on your market and execution."
         />
 
-        <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] sm:mt-12 lg:grid-cols-4">
-          {stats.map((s, i) => (
-            <motion.div
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px", amount: 0.2 }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] sm:mt-12 lg:grid-cols-4"
+        >
+          {stats.map((s) => (
+            <div
               key={s.label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="relative bg-background/40 px-3.5 py-5 transition-colors hover:bg-white/[0.02] sm:px-7 sm:py-9"
             >
               <div className="mt-0.5 flex items-baseline gap-1 font-display text-4xl leading-none tracking-tight sm:mt-1 sm:text-6xl">
@@ -111,22 +113,22 @@ export function Results() {
               <p className="mt-2 text-[12px] tracking-tight text-foreground/65 sm:mt-3 sm:text-[13px]">
                 {s.label}
               </p>
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </motion.div>
 
         <div className="mt-8 sm:mt-14">
-          <div className="grid gap-3 md:grid-cols-2 md:gap-4">
-            {clientResults.map((r, i) => {
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px", amount: 0.2 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="grid gap-3 md:grid-cols-2 md:gap-4"
+          >
+            {clientResults.map((r) => {
               const Icon = r.icon;
               return (
-                <motion.div
-                  key={r.client}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                >
+                <div key={r.client}>
                   <GlassCard className="relative flex h-full flex-col p-5 sm:p-8">
                     <div className="flex items-start justify-start">
                       <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-accent/30 bg-accent/[0.08] text-accent">
@@ -166,10 +168,10 @@ export function Results() {
                       </div>
                     </div>
                   </GlassCard>
-                </motion.div>
+                </div>
               );
             })}
-          </div>
+          </motion.div>
 
           <p className="mx-auto mt-6 max-w-xl text-center font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/35 sm:mt-8">
             Individual results vary · Outcomes depend on clinic, market, and execution

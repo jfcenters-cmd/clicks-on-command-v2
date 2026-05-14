@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 import { Logo } from "./ui/Logo";
 import { Button } from "./ui/Button";
 import { cn } from "@/lib/cn";
+import { useScrolledPast } from "@/lib/useScrolledPast";
 import { useCalendly } from "./CalendlyProvider";
 
 const links = [
@@ -17,7 +18,7 @@ const links = [
 
 export function Navbar() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
+  const scrolled = useScrolledPast(12);
   const [open, setOpen] = useState(false);
   const { open: openBooking, tryOpenStoredCalendarBooking } = useCalendly();
 
@@ -26,13 +27,6 @@ export function Navbar() {
     if (pathname === "/thank-you" && tryOpenStoredCalendarBooking()) return;
     openBooking();
   }
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -48,9 +42,9 @@ export function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
-          "flex w-[min(96%,1100px)] items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-500",
+          "flex w-[min(96%,1100px)] items-center justify-between rounded-2xl px-4 py-2.5 transition-[background-color,border-color,box-shadow] duration-300",
           scrolled
-            ? "border border-white/10 bg-background/70 backdrop-blur-xl shadow-[0_20px_40px_-25px_rgba(0,0,0,0.8)]"
+            ? "border border-white/10 bg-background/92 shadow-[0_20px_40px_-25px_rgba(0,0,0,0.8)] md:bg-background/70 md:backdrop-blur-xl"
             : "border border-transparent bg-transparent",
         )}
       >
@@ -97,7 +91,7 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 top-[64px] z-30 bg-background/95 backdrop-blur-xl md:hidden"
+            className="fixed inset-0 top-[64px] z-30 bg-background/[0.98] md:hidden"
           >
             <div className="flex flex-col gap-1 px-6 py-8">
               {links.map((l, i) => (

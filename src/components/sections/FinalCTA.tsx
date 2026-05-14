@@ -14,13 +14,7 @@ export function FinalCTA() {
     <section className="relative overflow-hidden py-12 sm:py-28">
       <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-30" />
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.4 }}
-          className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/15 blur-[140px]"
-        />
+        <div className="absolute left-1/2 top-1/2 hidden h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/15 blur-[140px] sm:block" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
       </div>
 
@@ -28,8 +22,8 @@ export function FinalCTA() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, margin: "-60px", amount: 0.2 }}
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col items-center text-center"
         >
           <h2 className="max-w-4xl font-display text-[clamp(2rem,6vw,5rem)] leading-[0.98] text-balance sm:text-[clamp(2.5rem,6.5vw,5rem)]">

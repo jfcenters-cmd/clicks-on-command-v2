@@ -13,32 +13,26 @@ export function PreferredVendor() {
       className="scroll-mt-nav relative overflow-hidden border-y border-white/[0.05] py-12 sm:py-24"
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-1/2 h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.05] blur-3xl" />
+        <div className="absolute left-1/2 top-1/2 hidden h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.05] blur-3xl sm:block" />
         <div className="absolute inset-x-0 top-0 mx-auto h-px max-w-3xl bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
       </div>
 
       <Container size="wide">
-        <div className="flex flex-col items-center text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, delay: 0.05 }}
-            className="max-w-3xl font-display text-[clamp(1.75rem,5.5vw,3.4rem)] leading-[1.08] text-balance sm:text-5xl md:text-[3.4rem]"
-          >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px", amount: 0.2 }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+          className="flex flex-col items-center"
+        >
+          <h2 className="max-w-3xl text-center font-display text-[clamp(1.75rem,5.5vw,3.4rem)] leading-[1.08] text-balance sm:text-5xl md:text-[3.4rem]">
             Preferred marketing vendor for{" "}
             <span className="text-accent italic">Contour Light® Research LLC.</span>
-          </motion.h2>
-        </div>
+          </h2>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-          className="mt-8 sm:mt-11"
-        >
-          <PartnerLockup />
+          <div className="mt-8 w-full sm:mt-11">
+            <PartnerLockup />
+          </div>
         </motion.div>
       </Container>
     </section>
@@ -82,7 +76,7 @@ function ContourLightLogo() {
         height={103}
         sizes="(max-width: 768px) 200px, 260px"
         className="h-auto w-full max-w-[220px] object-contain object-center"
-        quality={95}
+        quality={82}
       />
     </div>
   );
