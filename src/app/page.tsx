@@ -2,12 +2,7 @@ import dynamic from "next/dynamic";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/sections/Hero";
-
-const PreferredVendor = dynamic(() =>
-  import("@/components/sections/PreferredVendor").then((m) => ({
-    default: m.PreferredVendor,
-  })),
-);
+import { PreferredVendor } from "@/components/sections/PreferredVendor";
 
 const Results = dynamic(() =>
   import("@/components/sections/Results").then((m) => ({

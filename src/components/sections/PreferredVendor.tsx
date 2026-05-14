@@ -1,7 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { Award } from "lucide-react";
 import { Container } from "../ui/Container";
 import { GlassCard } from "../ui/GlassCard";
@@ -18,13 +15,7 @@ export function PreferredVendor() {
       </div>
 
       <Container size="wide">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px", amount: 0.2 }}
-          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-          className="flex flex-col items-center"
-        >
+        <div className="flex flex-col items-center">
           <h2 className="max-w-3xl text-center font-display text-[clamp(1.75rem,5.5vw,3.4rem)] leading-[1.08] text-balance sm:text-5xl md:text-[3.4rem]">
             Preferred marketing vendor for{" "}
             <span className="text-accent italic">Contour Light® Research LLC.</span>
@@ -33,7 +24,7 @@ export function PreferredVendor() {
           <div className="mt-8 w-full sm:mt-11">
             <PartnerLockup />
           </div>
-        </motion.div>
+        </div>
       </Container>
     </section>
   );

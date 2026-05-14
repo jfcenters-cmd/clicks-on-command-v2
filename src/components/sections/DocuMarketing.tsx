@@ -41,10 +41,10 @@ export function DocuMarketing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={view}
           transition={{ duration: 0.7, ease }}
-          className="mx-auto max-w-2xl text-center"
+          className="mx-auto flex w-full max-w-2xl flex-col items-center text-center"
         >
-          <Eyebrow>DocuMarketing</Eyebrow>
-          <h2 className="mt-3 font-display text-[clamp(1.6rem,4.2vw,2.85rem)] leading-[1.08] tracking-tight text-balance sm:mt-4">
+          <Eyebrow className="justify-center">DocuMarketing</Eyebrow>
+          <h2 className="mt-3 w-full max-w-xl font-display text-[clamp(1.6rem,4.2vw,2.85rem)] leading-[1.1] tracking-tight text-balance sm:mt-4 sm:max-w-2xl sm:leading-[1.08]">
             I spent 7 years figuring out why most marketing sucks{" "}
             <span className="text-accent italic">(so you don&apos;t have to).</span>
           </h2>
