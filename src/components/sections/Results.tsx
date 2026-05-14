@@ -16,7 +16,7 @@ type Stat = {
 
 const stats: Stat[] = [
   { label: "Prepays Generated", value: 11400, suffix: "+" },
-  { label: "Clinics Served", value: 87 },
+  { label: "Clients Served", value: 200, suffix: "+" },
   {
     label: "Revenue Generated",
     value: 42,
@@ -26,7 +26,7 @@ const stats: Stat[] = [
   },
   {
     label: "Ad Spend Managed",
-    value: 18,
+    value: 1,
     prefix: "$",
     suffix: "M+",
     format: (n) => n.toString(),
