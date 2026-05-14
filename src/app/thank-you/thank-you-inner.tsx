@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -17,12 +17,15 @@ const CALENDLY_BASE = getCalendlyBaseUrl();
 
 export function ThankYouInner() {
   const [guestName, setGuestName] = useState<string | null>(null);
-  const [embedSrc, setEmbedSrc] = useState<string | null>(null);
+  const [embedSrc, setEmbedSrc] = useState(() =>
+    appendCalendlyInlineParams(CALENDLY_BASE),
+  );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const prefill = readBookingPrefill();
     setGuestName(prefill?.name ?? null);
-    setEmbedSrc(appendCalendlyInlineParams(CALENDLY_BASE, prefill ?? undefined));
+    const next = appendCalendlyInlineParams(CALENDLY_BASE, prefill ?? undefined);
+    setEmbedSrc((prev) => (prev === next ? prev : next));
   }, []);
 
   const heading =
@@ -50,18 +53,14 @@ export function ThankYouInner() {
                 Pick a time for your strategy call below.
               </span>
             </h1>
-            <p className="mx-auto mt-4 max-w-md text-pretty text-[14px] leading-relaxed text-muted sm:mt-5 sm:text-[15px]">
-              Your name and email are carried over when you just came from the
-              form. Need to start over? You can still edit inside the scheduler.
-            </p>
           </motion.div>
 
           <motion.div
             id="schedule"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-10 scroll-mt-28 sm:mt-12 sm:scroll-mt-36"
+            transition={{ duration: 0.55, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-8 scroll-mt-28 sm:mt-10 sm:scroll-mt-36"
           >
             <GlassCard className="overflow-hidden p-1 sm:p-2">
               <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0b0b0d] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]">
@@ -73,19 +72,12 @@ export function ThankYouInner() {
                     Schedule your call
                   </p>
                 </div>
-                <div className="relative min-h-[min(72dvh,640px)] w-full sm:min-h-[620px] lg:min-h-[640px]">
-                  {embedSrc ? (
-                    <iframe
-                      title="Schedule a strategy call with Clicks On Command"
-                      src={embedSrc}
-                      className="absolute inset-0 h-full w-full border-0"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="flex h-[min(72dvh,640px)] items-center justify-center text-[14px] text-foreground/45">
-                      Loading calendar…
-                    </div>
-                  )}
+                <div className="relative min-h-[min(78dvh,680px)] w-full sm:min-h-[640px] lg:min-h-[660px]">
+                  <iframe
+                    title="Schedule a strategy call with Clicks On Command"
+                    src={embedSrc}
+                    className="absolute inset-0 h-full w-full border-0"
+                  />
                 </div>
               </div>
             </GlassCard>
@@ -96,11 +88,6 @@ export function ThankYouInner() {
               Back to homepage
             </Button>
           </div>
-
-          <p className="mx-auto mt-10 max-w-md text-center font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-foreground/35 sm:mt-12">
-            Booking details stay in this browser until you complete scheduling
-            or clear site data.
-          </p>
         </Container>
       </main>
       <Footer />

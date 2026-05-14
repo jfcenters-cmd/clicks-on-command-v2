@@ -13,7 +13,8 @@ export function appendCalendlyInlineParams(
 ): string {
   const params = new URLSearchParams({
     hide_event_type_details: "0",
-    hide_gdpr_banner: "0",
+    /** Hides Calendly’s cookie / data-sharing banner inside the embed (you handle site-level consent). */
+    hide_gdpr_banner: "1",
     background_color: "0b0b0d",
     text_color: "f5f5f4",
     primary_color: "c9a66b",
