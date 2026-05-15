@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CalendlyProvider } from "@/components/CalendlyProvider";
 import "./globals.css";
@@ -111,6 +112,7 @@ fbq('track', 'PageView');`,
           </>
         ) : null}
         <CalendlyProvider>{children}</CalendlyProvider>
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
