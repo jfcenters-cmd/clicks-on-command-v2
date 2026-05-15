@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, X } from "lucide-react";
@@ -23,7 +23,9 @@ type OptInModalProps = {
 export function OptInModal({ isOpen, onClose }: OptInModalProps) {
   const router = useRouter();
   const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const submittingRef = useRef(false);
   const [nationalPhone, setNationalPhone] = useState("");
   const [phoneIso, setPhoneIso] = useState("US");
   const [website, setWebsite] = useState("");
@@ -33,6 +35,7 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
   useEffect(() => {
     if (!isOpen) return;
     setFirstName("");
+    setLastName("");
     setEmail("");
     setNationalPhone("");
     setPhoneIso(defaultPhoneIso());
@@ -57,6 +60,7 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (submittingRef.current || pending) return;
     setError(null);
 
     if (!isValidNationalNumber(phoneIso, nationalDigits)) {
@@ -70,14 +74,18 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
 
     const phone = buildE164(region.dial, nationalDigits);
 
+    submittingRef.current = true;
     setPending(true);
 
     try {
+      const trimmedFirst = firstName.trim();
+      const trimmedLast = lastName.trim();
       const res = await fetch("/api/optin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName,
+          firstName: trimmedFirst,
+          ...(trimmedLast ? { lastName: trimmedLast } : {}),
           email,
           phone,
           website,
@@ -91,19 +99,23 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
 
       if (!res.ok) {
         setError(data.error ?? "Something went wrong. Try again.");
+        submittingRef.current = false;
         setPending(false);
         return;
       }
 
+      const calendlyName = [trimmedFirst, trimmedLast].filter(Boolean).join(" ");
       storeBookingPrefill({
-        name: firstName.trim(),
+        name: calendlyName,
         email: email.trim(),
       });
+      submittingRef.current = false;
       setPending(false);
       onClose();
       router.push("/thank-you");
     } catch {
       setError("Could not reach the server. Check your connection.");
+      submittingRef.current = false;
       setPending(false);
     }
   }
@@ -190,20 +202,36 @@ export function OptInModal({ isOpen, onClose }: OptInModalProps) {
                 className="pointer-events-none absolute left-0 top-0 h-0 w-0 opacity-0"
               />
 
-              <label className="block">
-                <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">
-                  First name
-                </span>
-                <input
-                  required
-                  name="firstName"
-                  autoComplete="given-name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-[15px] text-foreground outline-none ring-accent/30 transition-[border-color,box-shadow] placeholder:text-foreground/25 focus:border-accent/40 focus:ring-2"
-                  placeholder="Jordan"
-                />
-              </label>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <label className="block">
+                  <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">
+                    First name
+                  </span>
+                  <input
+                    required
+                    name="firstName"
+                    autoComplete="given-name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-[15px] text-foreground outline-none ring-accent/30 transition-[border-color,box-shadow] placeholder:text-foreground/25 focus:border-accent/40 focus:ring-2"
+                    placeholder="Jordan"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">
+                    Last name
+                  </span>
+                  <input
+                    name="lastName"
+                    autoComplete="family-name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className="w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 py-3 text-[15px] text-foreground outline-none ring-accent/30 transition-[border-color,box-shadow] placeholder:text-foreground/25 focus:border-accent/40 focus:ring-2"
+                    placeholder="Lee"
+                  />
+                </label>
+              </div>
 
               <label className="block">
                 <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/45">

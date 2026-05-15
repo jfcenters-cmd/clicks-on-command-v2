@@ -25,6 +25,8 @@ export async function POST(request: Request) {
 
     const firstName =
       typeof body.firstName === "string" ? body.firstName.trim() : "";
+    const lastName =
+      typeof body.lastName === "string" ? body.lastName.trim() : "";
     const email = typeof body.email === "string" ? body.email.trim() : "";
     const phone =
       typeof body.phone === "string" ? body.phone.trim().replace(/\s/g, "") : "";
@@ -34,6 +36,7 @@ export async function POST(request: Request) {
     if (
       firstName.length < 1 ||
       firstName.length > 120 ||
+      lastName.length > 120 ||
       !isValidEmail(email) ||
       email.length > 254 ||
       !isPlausibleE164(phone) ||
@@ -49,6 +52,7 @@ export async function POST(request: Request) {
 
     const payload = {
       firstName,
+      ...(lastName ? { lastName } : {}),
       email,
       phone,
       ...(phoneCountry ? { phoneCountry } : {}),
@@ -66,6 +70,7 @@ export async function POST(request: Request) {
         : Promise.resolve(),
       syncCloseLead({
         firstName,
+        ...(lastName ? { lastName } : {}),
         email,
         phone,
         ...(phoneCountry ? { phoneCountry } : {}),
