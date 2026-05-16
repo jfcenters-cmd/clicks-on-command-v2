@@ -3,6 +3,7 @@ import { Inter, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import { CalendlyProvider } from "@/components/CalendlyProvider";
 import "./globals.css";
 
@@ -114,6 +115,7 @@ fbq('track', 'PageView');`,
         <CalendlyProvider>{children}</CalendlyProvider>
         <Analytics />
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
