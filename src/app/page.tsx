@@ -1,13 +1,8 @@
-import {
-  Content,
-  fetchOneEntry,
-  getBuilderSearchParams,
-  isPreviewing,
-} from "@builder.io/sdk-react-nextjs";
+import { fetchOneEntry, getBuilderSearchParams } from "@builder.io/sdk-react-nextjs";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { HomePageStatic } from "@/components/home/HomePageStatic";
-import { customComponents } from "@/builder/builder-registry";
+import { BuilderHomeContent } from "@/components/builder/BuilderHomeContent";
 import { getBuilderApiKey, toBuilderQuery } from "@/lib/builder";
 
 export const revalidate = 60;
@@ -24,16 +19,21 @@ export default async function Home({ searchParams }: HomePageProps) {
   }
 
   const resolvedSearch = toBuilderQuery(await searchParams);
-  const content = await fetchOneEntry({
-    model: "page",
-    apiKey,
-    options: getBuilderSearchParams(resolvedSearch),
-    userAttributes: { urlPath: "/" },
-  });
 
-  const preview = isPreviewing(resolvedSearch);
+  let content: Awaited<ReturnType<typeof fetchOneEntry>> = null;
 
-  if (!content && !preview) {
+  try {
+    content = await fetchOneEntry({
+      model: "page",
+      apiKey,
+      options: getBuilderSearchParams(resolvedSearch),
+      userAttributes: { urlPath: "/" },
+    });
+  } catch (err) {
+    console.error("[builder] fetchOneEntry failed:", err);
+  }
+
+  if (!content) {
     return <HomePageStatic />;
   }
 
@@ -41,12 +41,7 @@ export default async function Home({ searchParams }: HomePageProps) {
     <>
       <Navbar />
       <main className="relative">
-        <Content
-          content={content}
-          apiKey={apiKey}
-          model="page"
-          customComponents={customComponents}
-        />
+        <BuilderHomeContent content={content} apiKey={apiKey} />
       </main>
       <Footer />
     </>

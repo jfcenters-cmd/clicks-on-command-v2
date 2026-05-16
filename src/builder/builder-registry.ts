@@ -1,3 +1,5 @@
+"use client";
+
 import type { RegisteredComponent } from "@builder.io/sdk-react-nextjs";
 import { Hero } from "@/components/sections/Hero";
 import { PreferredVendor } from "@/components/sections/PreferredVendor";
