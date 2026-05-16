@@ -59,28 +59,57 @@ type ClientResult = {
   context: string;
 };
 
-const clientResults: ClientResult[] = [
-  {
-    icon: Flame,
-    metric: "$100K",
-    metricSub: "first month at six figures",
-    client: "Dr. Hartman",
-    role: "Body Contouring Clinic Owner",
-    context:
-      "Hit his first $100K month after installing the Clicks On Command prepay system.",
-  },
-  {
-    icon: TrendingUp,
-    metric: "$16K",
-    metricSub: "in just a few weeks",
-    client: "Haley",
-    role: "Body Contouring Clinic Owner",
-    context:
-      "Generated $16K within weeks of starting with us — after firing her previous agency for not delivering.",
-  },
-];
+export type ResultsProps = {
+  sectionTitleLine1?: string;
+  sectionTitleAccent?: string;
+  sectionDescription?: string;
+  client1Metric?: string;
+  client1MetricSub?: string;
+  client1Context?: string;
+  client1Name?: string;
+  client1Role?: string;
+  client2Metric?: string;
+  client2MetricSub?: string;
+  client2Context?: string;
+  client2Name?: string;
+  client2Role?: string;
+  disclaimer?: string;
+};
 
-export function Results() {
+export function Results({
+  sectionTitleLine1 = "Built to put real revenue",
+  sectionTitleAccent = "on the books.",
+  sectionDescription = "Aggregate figures from our body contouring accounts. Your results will depend on your market and execution.",
+  client1Metric = "$100K",
+  client1MetricSub = "first month at six figures",
+  client1Context = "Hit his first $100K month after installing the Clicks On Command prepay system.",
+  client1Name = "Dr. Hartman",
+  client1Role = "Body Contouring Clinic Owner",
+  client2Metric = "$16K",
+  client2MetricSub = "in just a few weeks",
+  client2Context = "Generated $16K within weeks of starting with us — after firing her previous agency for not delivering.",
+  client2Name = "Haley",
+  client2Role = "Body Contouring Clinic Owner",
+  disclaimer = "Individual results vary · Outcomes depend on clinic, market, and execution",
+}: ResultsProps) {
+  const clientResults: ClientResult[] = [
+    {
+      icon: Flame,
+      metric: client1Metric,
+      metricSub: client1MetricSub,
+      client: client1Name,
+      role: client1Role,
+      context: client1Context,
+    },
+    {
+      icon: TrendingUp,
+      metric: client2Metric,
+      metricSub: client2MetricSub,
+      client: client2Name,
+      role: client2Role,
+      context: client2Context,
+    },
+  ];
   return (
     <section
       id="results"
@@ -97,12 +126,12 @@ export function Results() {
         <SectionHeading
           title={
             <>
-              Built to put real revenue
+              {sectionTitleLine1}
               <br />
-              <span className="text-accent italic">on the books.</span>
+              <span className="text-accent italic">{sectionTitleAccent}</span>
             </>
           }
-          description="Aggregate figures from our body contouring accounts. Your results will depend on your market and execution."
+          description={sectionDescription}
         />
 
         <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] sm:mt-12 lg:grid-cols-4">
@@ -184,7 +213,7 @@ export function Results() {
           </div>
 
           <p className="mx-auto mt-6 max-w-xl text-center font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/35 sm:mt-8">
-            Individual results vary · Outcomes depend on clinic, market, and execution
+            {disclaimer}
           </p>
         </div>
       </Container>

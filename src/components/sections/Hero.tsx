@@ -29,12 +29,20 @@ const DEFAULT_PRIMARY_CTA = "Book A Strategy Call";
 const DEFAULT_SECONDARY_CTA = "How DocuMarketing works →";
 
 export type HeroProps = {
+  headlineBefore?: string;
+  headlineAccent?: string;
+  headlineLine2?: string;
+  headlineEmphasis?: string;
   subhead?: string;
   primaryCtaLabel?: string;
   secondaryCtaLabel?: string;
 };
 
 export function Hero({
+  headlineBefore = "Predictable",
+  headlineAccent = "prepaid sales",
+  headlineLine2 = "for body contouring clinics —",
+  headlineEmphasis = "on command.",
   subhead = DEFAULT_SUBHEAD,
   primaryCtaLabel = DEFAULT_PRIMARY_CTA,
   secondaryCtaLabel = DEFAULT_SECONDARY_CTA,
@@ -57,12 +65,12 @@ export function Hero({
             custom={0}
             className="mt-0 max-w-5xl font-display text-[clamp(2rem,6.5vw,5.5rem)] leading-[0.98] tracking-tight text-balance text-shadow-luxe sm:text-[clamp(2.5rem,7vw,5.5rem)]"
           >
-            Predictable{" "}
-            <span className="text-accent">prepaid sales</span>
+            {headlineBefore}{" "}
+            <span className="text-accent">{headlineAccent}</span>
             <span className="block text-foreground/95">
-              for body contouring clinics —{" "}
+              {headlineLine2}{" "}
               <em className="font-display italic text-foreground/70">
-                on command.
+                {headlineEmphasis}
               </em>
             </span>
           </motion.h1>

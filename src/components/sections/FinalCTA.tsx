@@ -4,25 +4,32 @@ import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { useCalendly } from "../CalendlyProvider";
 
-const guarantees = ["Body contouring only", "30 minutes"];
-
 const DEFAULT_SUBHEAD =
   "If you run a body contouring clinic and want a prepay system installed, we'll map what we'd build for you — in 30 minutes on a call.";
 const DEFAULT_PRIMARY_CTA = "Book A Strategy Call";
 const DEFAULT_SECONDARY_CTA = "Read the approach";
 
 export type FinalCTAProps = {
+  headlineLine1?: string;
+  headlineAccent?: string;
   subhead?: string;
   primaryCtaLabel?: string;
   secondaryCtaLabel?: string;
+  guarantee1?: string;
+  guarantee2?: string;
 };
 
 export function FinalCTA({
+  headlineLine1 = "Stop chasing leads.",
+  headlineAccent = "Start collecting prepays.",
   subhead = DEFAULT_SUBHEAD,
   primaryCtaLabel = DEFAULT_PRIMARY_CTA,
   secondaryCtaLabel = DEFAULT_SECONDARY_CTA,
+  guarantee1 = "Body contouring only",
+  guarantee2 = "30 minutes",
 }: FinalCTAProps) {
   const { open } = useCalendly();
+  const guarantees = [guarantee1, guarantee2];
 
   return (
     <section className="relative overflow-hidden py-12 sm:py-28">
@@ -35,11 +42,9 @@ export function FinalCTA({
       <Container size="default">
         <div className="flex flex-col items-center text-center">
           <h2 className="max-w-4xl font-display text-[clamp(2rem,6vw,5rem)] leading-[0.98] text-balance sm:text-[clamp(2.5rem,6.5vw,5rem)]">
-            Stop chasing leads.
+            {headlineLine1}
             <br />
-            <span className="text-accent italic">
-              Start collecting prepays.
-            </span>
+            <span className="text-accent italic">{headlineAccent}</span>
           </h2>
 
           <p className="mt-4 max-w-xl text-pretty text-base leading-relaxed text-muted sm:mt-6 sm:text-lg">

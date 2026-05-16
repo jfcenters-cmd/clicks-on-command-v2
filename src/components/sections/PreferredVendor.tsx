@@ -5,7 +5,19 @@ import { Award } from "lucide-react";
 import { Container } from "../ui/Container";
 import { GlassCard } from "../ui/GlassCard";
 
-export function PreferredVendor() {
+export type PreferredVendorProps = {
+  sectionTitlePrefix?: string;
+  sectionTitleHighlight?: string;
+  cardTitle?: string;
+  cardBody?: string;
+};
+
+export function PreferredVendor({
+  sectionTitlePrefix = "Preferred marketing vendor for",
+  sectionTitleHighlight = "Contour Light® Research LLC.",
+  cardTitle = "Preferred marketing vendor",
+  cardBody = "Named partner for clinics deploying Contour Light® — prepay funnels, acquisition, and patient education.",
+}: PreferredVendorProps) {
   return (
     <section
       id="partner"
@@ -19,12 +31,12 @@ export function PreferredVendor() {
       <Container size="wide">
         <div className="flex flex-col items-center">
           <h2 className="max-w-3xl text-center font-display text-[clamp(1.75rem,5.5vw,3.4rem)] leading-[1.08] text-balance sm:text-5xl md:text-[3.4rem]">
-            Preferred marketing vendor for{" "}
-            <span className="text-accent italic">Contour Light® Research LLC.</span>
+            {sectionTitlePrefix}{" "}
+            <span className="text-accent italic">{sectionTitleHighlight}</span>
           </h2>
 
           <div className="mt-8 w-full sm:mt-11">
-            <PartnerLockup />
+            <PartnerLockup cardTitle={cardTitle} cardBody={cardBody} />
           </div>
         </div>
       </Container>
@@ -32,7 +44,13 @@ export function PreferredVendor() {
   );
 }
 
-function PartnerLockup() {
+function PartnerLockup({
+  cardTitle,
+  cardBody,
+}: {
+  cardTitle: string;
+  cardBody: string;
+}) {
   return (
     <GlassCard className="relative overflow-hidden px-5 py-7 sm:px-10 sm:py-11">
       <div className="mx-auto flex max-w-lg flex-col items-center text-center">
@@ -44,11 +62,10 @@ function PartnerLockup() {
         </div>
 
         <p className="mt-4 font-display text-xl leading-tight tracking-tight text-foreground sm:mt-6 sm:text-2xl md:text-3xl">
-          Preferred marketing vendor
+          {cardTitle}
         </p>
         <p className="mt-2 max-w-md text-[15px] leading-relaxed text-foreground/65 sm:text-base">
-          Named partner for clinics deploying Contour Light® — prepay funnels,
-          acquisition, and patient education.
+          {cardBody}
         </p>
 
         <div className="mt-6 w-full border-t border-white/[0.08] pt-6 sm:mt-8 sm:pt-8">
