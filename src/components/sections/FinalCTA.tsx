@@ -6,7 +6,22 @@ import { useCalendly } from "../CalendlyProvider";
 
 const guarantees = ["Body contouring only", "30 minutes"];
 
-export function FinalCTA() {
+const DEFAULT_SUBHEAD =
+  "If you run a body contouring clinic and want a prepay system installed, we'll map what we'd build for you — in 30 minutes on a call.";
+const DEFAULT_PRIMARY_CTA = "Book A Strategy Call";
+const DEFAULT_SECONDARY_CTA = "Read the approach";
+
+export type FinalCTAProps = {
+  subhead?: string;
+  primaryCtaLabel?: string;
+  secondaryCtaLabel?: string;
+};
+
+export function FinalCTA({
+  subhead = DEFAULT_SUBHEAD,
+  primaryCtaLabel = DEFAULT_PRIMARY_CTA,
+  secondaryCtaLabel = DEFAULT_SECONDARY_CTA,
+}: FinalCTAProps) {
   const { open } = useCalendly();
 
   return (
@@ -28,8 +43,7 @@ export function FinalCTA() {
           </h2>
 
           <p className="mt-4 max-w-xl text-pretty text-base leading-relaxed text-muted sm:mt-6 sm:text-lg">
-            If you run a body contouring clinic and want a prepay system installed,
-            we&apos;ll map what we&apos;d build for you — in 30 minutes on a call.
+            {subhead}
           </p>
 
           <div className="mt-6 flex flex-col items-center gap-3 sm:mt-8 sm:flex-row sm:gap-4">
@@ -39,10 +53,10 @@ export function FinalCTA() {
               withArrow
               onClick={() => open()}
             >
-              Book A Strategy Call
+              {primaryCtaLabel}
             </Button>
             <Button variant="secondary" size="lg" href="#documarketing">
-              Read the approach
+              {secondaryCtaLabel}
             </Button>
           </div>
 

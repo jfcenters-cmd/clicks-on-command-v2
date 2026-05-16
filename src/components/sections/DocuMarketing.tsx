@@ -1,3 +1,5 @@
+"use client";
+
 import { Container } from "../ui/Container";
 import { Eyebrow } from "../ui/Eyebrow";
 import { GlassCard } from "../ui/GlassCard";

@@ -23,7 +23,22 @@ const fadeUp: Variants = {
   }),
 };
 
-export function Hero() {
+const DEFAULT_SUBHEAD =
+  "We get you paying customers that actually want your help — and we do all the heavy lifting.";
+const DEFAULT_PRIMARY_CTA = "Book A Strategy Call";
+const DEFAULT_SECONDARY_CTA = "How DocuMarketing works →";
+
+export type HeroProps = {
+  subhead?: string;
+  primaryCtaLabel?: string;
+  secondaryCtaLabel?: string;
+};
+
+export function Hero({
+  subhead = DEFAULT_SUBHEAD,
+  primaryCtaLabel = DEFAULT_PRIMARY_CTA,
+  secondaryCtaLabel = DEFAULT_SECONDARY_CTA,
+}: HeroProps) {
   const { open } = useCalendly();
 
   return (
@@ -59,8 +74,7 @@ export function Hero() {
             custom={1}
             className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:mt-6 sm:text-lg"
           >
-            We get you paying customers that actually want your help — and we do
-            all the heavy lifting.
+            {subhead}
           </motion.p>
 
           <motion.div
@@ -76,10 +90,10 @@ export function Hero() {
               withArrow
               onClick={() => open()}
             >
-              Book A Strategy Call
+              {primaryCtaLabel}
             </Button>
             <Button variant="ghost" size="lg" href="#documarketing">
-              How DocuMarketing works →
+              {secondaryCtaLabel}
             </Button>
           </motion.div>
         </div>
